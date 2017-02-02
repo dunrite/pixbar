@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -7,11 +8,81 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingTop="16dp"
     tools:context="com.dunrite.pixelfy.MainActivity">
 
+
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/serviceToggle"
+        android:checked="false"
+        android:text="@string/show_button_fill"/>
+
     <TextView
+        android:text="@string/scale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/scaleLabel" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scaleBar"
+        android:layout_below="@+id/scaleLabel"
+        android:progress="50" />
+
+    <TextView
+        android:text="@string/spacing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/scaleBar"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/spacingLabel" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spacingBar"
+        android:layout_below="@+id/spacingLabel"
+        android:progress="50" />
+
+    <ImageView
+        app:srcCompat="@android:color/black"
+        android:layout_below="@+id/spacingBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="137dp"
+        android:id="@+id/mockNavbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        app:srcCompat="@drawable/home"
+        android:id="@+id/homeButton"
+        android:layout_marginLeft="85dp"
+        android:layout_marginRight="85dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/mockNavbar"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/recents"
+        android:id="@+id/recentsButton"
+        android:layout_alignTop="@id/mockNavbar"
+        android:layout_toEndOf="@id/homeButton"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/back"
+        android:id="@+id/backButton"
+        android:layout_alignTop="@id/mockNavbar"
+        android:layout_toStartOf="@id/homeButton"/>
+
 </RelativeLayout>
