@@ -50,39 +50,44 @@
         android:layout_below="@+id/spacingLabel"
         android:progress="50" />
 
-    <ImageView
-        app:srcCompat="@android:color/black"
-        android:layout_below="@+id/spacingBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="137dp"
-        android:id="@+id/mockNavbar"
+    <RelativeLayout
+        android:id="@+id/navbarPreview"
         android:layout_width="match_parent"
-        android:layout_height="48dp"/>
+        android:layout_height="48dp"
+        android:layout_below="@id/spacingBar"
+        android:layout_marginTop="80dp">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/home"
-        android:id="@+id/homeButton"
-        android:layout_marginLeft="85dp"
-        android:layout_marginRight="85dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignTop="@id/mockNavbar"/>
+        <ImageView
+            app:srcCompat="@android:color/black"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/mockNavbar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/recents"
-        android:id="@+id/recentsButton"
-        android:layout_alignTop="@id/mockNavbar"
-        android:layout_toEndOf="@id/homeButton"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/home"
+            android:id="@+id/homeButton"
+            android:layout_marginLeft="85dp"
+            android:layout_marginRight="85dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/back"
-        android:id="@+id/backButton"
-        android:layout_alignTop="@id/mockNavbar"
-        android:layout_toStartOf="@id/homeButton"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/recents"
+            android:id="@+id/recentsButton"
+            android:layout_toEndOf="@id/homeButton"
+            android:layout_centerVertical="true"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/back"
+            android:id="@+id/backButton"
+            android:layout_toStartOf="@id/homeButton"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
 </RelativeLayout>
