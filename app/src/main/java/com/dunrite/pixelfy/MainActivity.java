@@ -1,10 +1,16 @@
 package com.dunrite.pixelfy;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Switch;
@@ -19,8 +25,11 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.homeButton) ImageView homeButton;
     @BindView(R.id.backButton) ImageView backButton;
     @BindView(R.id.recentsButton) ImageView recentsButton;
+    @BindView(R.id.applyButton) Button applyButton;
     private final int NAVBAR_HEIGHT_IN_DP = 48;
     private final int DEFAULT_SPACING = 125;
+    public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
+
     public Activity activity;
 
     @Override
@@ -35,6 +44,19 @@ public class MainActivity extends AppCompatActivity {
     private void initialize() {
         spacingBar.setProgress(Utils.getSpacing(activity));
         scaleBar.setProgress(Utils.getScale(activity));
+        applyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (!Settings.canDrawOverlays(activity)) {
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                Uri.parse("package:" + getPackageName()));
+                        startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
+                    }
+                }
+                startService(new Intent(MainActivity.this, FloatingService.class));
+            }
+        });
         spacingBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
