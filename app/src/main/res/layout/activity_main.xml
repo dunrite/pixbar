@@ -19,108 +19,129 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
-    <TextView
-        android:text="@string/scale"
+    <android.support.v7.widget.CardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="85dp"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/scaleLabel"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+        android:layout_below="@+id/serviceToggle"
+        android:layout_marginTop="16dp">
 
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/scaleBar"
-        android:layout_below="@+id/scaleLabel"
-        android:progress="50"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
-
-    <TextView
-        android:text="@string/spacing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/scaleBar"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/spacingLabel"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
-
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spacingBar"
-        android:layout_below="@+id/spacingLabel"
-        android:progress="50"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
-
-    <TextView
-        android:text="@string/preview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/previewLabel"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:layout_below="@id/spacingBar"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
-
-    <RelativeLayout
-        android:id="@+id/navbarPreview"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@id/previewLabel"
-        android:clipChildren="false">
-
-        <ImageView
-            app:srcCompat="@android:color/black"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/mockNavbar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"/>
+            android:layout_height="match_parent"
+            android:padding="16dp">
+            <TextView
+                android:text="@string/scale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/scaleLabel"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/home"
-            android:id="@+id/homeButton"
-            android:layout_marginLeft="85dp"
-            android:layout_marginRight="85dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"/>
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scaleBar"
+                android:layout_below="@+id/scaleLabel"
+                android:progress="50"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/recents"
-            android:id="@+id/recentsButton"
-            android:layout_toEndOf="@id/homeButton"
-            android:layout_centerVertical="true"/>
+            <TextView
+                android:text="@string/spacing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/scaleBar"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/spacingLabel"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/back"
-            android:id="@+id/backButton"
-            android:layout_toStartOf="@id/homeButton"
-            android:layout_centerVertical="true"/>
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spacingBar"
+                android:layout_below="@+id/spacingLabel"
+                android:progress="50"/>
 
+            <CheckBox
+                android:visibility="gone"
+                android:text="@string/show_guides"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/showGuideCheck"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/spacingBar"
+                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                app:buttonTint="@color/colorAccent" />
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-    <Button
-        android:text="@string/apply"
-        android:layout_width="wrap_content"
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/navbarPreview"
-        android:layout_marginTop="8dp"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/applyButton"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+        android:layout_below="@+id/card"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:text="@string/preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/previewLabel"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+        <RelativeLayout
+            android:id="@+id/navbarPreview"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="48dp"
+            android:clipChildren="false">
+
+            <ImageView
+                app:srcCompat="@android:color/black"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/mockNavbar"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/home"
+                android:id="@+id/homeButton"
+                android:layout_marginLeft="85dp"
+                android:layout_marginRight="85dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/recents"
+                android:id="@+id/recentsButton"
+                android:layout_toEndOf="@id/homeButton"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/back"
+                android:id="@+id/backButton"
+                android:layout_toStartOf="@id/homeButton"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <Button
+            android:text="@string/apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mockNavbar"
+            android:layout_marginTop="98dp"
+            android:layout_gravity="right"
+            android:id="@+id/applyButton"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+    </android.support.v7.widget.CardView>
 
 
 

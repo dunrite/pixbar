@@ -11,7 +11,6 @@ import android.widget.Toast;
  */
 public class NavbarService extends Service {
 
-    private final static int FOREGROUND_ID = 1000;
     private ButtonLayer buttonLayer;
 
     @Override
