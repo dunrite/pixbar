@@ -1,4 +1,4 @@
-package com.dunrite.pixelfy;
+package com.dunrite.pixbar;
 
 import android.content.Intent;
 import android.graphics.Color;
