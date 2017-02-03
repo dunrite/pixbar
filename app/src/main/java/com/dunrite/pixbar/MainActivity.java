@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
         recentsLeftGuide.setVisibility(View.VISIBLE);
         recentsRightGuide.setVisibility(View.VISIBLE);
+        Utils.setShowGuides(this, true);
     }
 
     private void hideGuides() {
@@ -174,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
 
         recentsLeftGuide.setVisibility(View.GONE);
         recentsRightGuide.setVisibility(View.GONE);
+        Utils.setShowGuides(this, true);
     }
 
     private void resetGuides() {
