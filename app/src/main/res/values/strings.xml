@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pixelfy</string>
+    <string name="app_name">Pixbar</string>
     <string name="show_button_fill">Show Button Fill</string>
     <string name="scale">Scale</string>
     <string name="spacing">Spacing</string>

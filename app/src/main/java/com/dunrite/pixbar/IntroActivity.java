@@ -25,12 +25,12 @@ public class IntroActivity extends AppIntro2 {
 
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest.
-        addSlide(AppIntroFragment.newInstance("Welcome to Pixelfy!",
-                "With this app, you can make your navigation buttons look like the ones on the Google Pixel!", R.mipmap.ic_launcher,
+        addSlide(AppIntroFragment.newInstance("Welcome to Pixbar!",
+                "With this app, you can make your navigation buttons look like the ones on the Pixel!", R.mipmap.ic_launcher,
                 ContextCompat.getColor(this, R.color.colorAccent)));
 
         addSlide(AppIntroFragment.newInstance("Allow Permissions",
-                "In order to function, you need to allow Pixelfy to draw over apps",
+                "In order to function, you need to allow Pixbar to draw over apps",
                 R.mipmap.ic_launcher,
                 ContextCompat.getColor(this, R.color.colorAccent)));
 

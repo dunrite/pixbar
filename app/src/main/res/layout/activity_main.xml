@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/scaleBar"
                 android:layout_below="@+id/scaleLabel"
-                android:progress="50"/>
+                android:progress="49"/>
 
             <TextView
                 android:text="@string/spacing"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/spacingBar"
                 android:layout_below="@+id/spacingLabel"
-                android:progress="50"/>
+                android:progress="49"/>
 
             <CheckBox
                 android:visibility="gone"

@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+        applyButton.setEnabled(Utils.isEnabled(this));
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     startService();
                 else
                     stopService();
+                applyButton.setEnabled(isChecked);
             }
         });
 
