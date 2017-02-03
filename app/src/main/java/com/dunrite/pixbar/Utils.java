@@ -36,6 +36,11 @@ public class Utils {
         return sharedPref.getBoolean("first", true);
     }
 
+    public static boolean showGuides(Context c) {
+        SharedPreferences sharedPref = c.getSharedPreferences("guides", Context.MODE_PRIVATE);
+        return sharedPref.getBoolean("guides", false);
+    }
+
     public static void saveValue(Activity a, String type, int value) {
         SharedPreferences sharedPref = a.getSharedPreferences(type, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -47,6 +52,13 @@ public class Utils {
         SharedPreferences sharedPref = a.getSharedPreferences("enabled", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("enabled", enabled);
+        editor.apply();
+    }
+
+    public static void setShowGuides(Activity a, boolean enabled) {
+        SharedPreferences sharedPref = a.getSharedPreferences("guides", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("guides", enabled);
         editor.apply();
     }
 
