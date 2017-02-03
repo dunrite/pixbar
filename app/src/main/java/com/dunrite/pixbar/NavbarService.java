@@ -32,19 +32,31 @@ public class NavbarService extends Service {
         destroyButtonLayer();
     }
 
+    /**
+     * Initialize the buttons
+     */
     private void initButtonLayer() {
         buttonLayer = new ButtonLayer(this);
     }
 
+    /**
+     * Destroy the buttons
+     */
     private void destroyButtonLayer() {
         buttonLayer.destroy();
         buttonLayer = null;
     }
 
+    /**
+     * For debugging. Log that the service started
+     */
     private void logServiceStarted() {
         Toast.makeText(this, "Service started", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * For debugging. Log that the service ended
+     */
     private void logServiceEnded() {
         Toast.makeText(this, "Service ended", Toast.LENGTH_SHORT).show();
     }

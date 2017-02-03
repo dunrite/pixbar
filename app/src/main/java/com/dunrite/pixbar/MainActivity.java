@@ -18,6 +18,9 @@ import android.widget.Switch;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * The Main Activity of the entire application
+ */
 public class MainActivity extends AppCompatActivity {
     //Service toggles
     @BindView(R.id.serviceToggle) Switch serviceToggle;
@@ -62,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
         initialize();
     }
 
+    /**
+     * Initialize everything for the activity
+     */
     private void initialize() {
         showGuideCheck.setChecked(Utils.showGuides(this));
         applyButton.setEnabled(Utils.isEnabled(this));
@@ -140,19 +146,31 @@ public class MainActivity extends AppCompatActivity {
         scaleBar.setProgress(Utils.getScale(activity));
     }
 
+    /**
+     * Restart the service that shows the buttons on the navbar
+     */
     private void restartService() {
         stopService();
         startService();
     }
 
+    /**
+     * Start the service that shows the buttons on the navbar
+     */
     private void startService() {
         startService(new Intent(this, NavbarService.class));
     }
 
+    /**
+     * Stop the service that shows the buttons on the navbar
+     */
     private void stopService() {
         stopService(new Intent(this, NavbarService.class));
     }
 
+    /**
+     * Show guide lines that help with placement
+     */
     private void showGuides() {
         resetGuides();
         homeLeftGuide.setVisibility(View.VISIBLE);
@@ -166,6 +184,9 @@ public class MainActivity extends AppCompatActivity {
         Utils.setShowGuides(this, true);
     }
 
+    /**
+     * Hide guide lines that help with placement
+     */
     private void hideGuides() {
         homeLeftGuide.setVisibility(View.GONE);
         homeRightGuide.setVisibility(View.GONE);
@@ -178,6 +199,9 @@ public class MainActivity extends AppCompatActivity {
         Utils.setShowGuides(this, true);
     }
 
+    /**
+     * Reset the position of the guide lines
+     */
     private void resetGuides() {
         homeLeftGuide.setX((homeButton.getX() + homeButton.getWidth()/2) - homeButton.getHeight()/2);
         homeRightGuide.setX((homeButton.getX() + homeButton.getWidth()/2) + homeButton.getHeight()/2);

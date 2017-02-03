@@ -23,7 +23,10 @@ public class ButtonLayer extends View {
     @BindView(R.id.backButtonS) ImageView backButton;
     @BindView(R.id.recentsButtonS) ImageView recentsButton;
 
-
+    /**
+     * Constructor
+     * @param context application context
+     */
     public ButtonLayer(Context context) {
         super(context);
         this.context = context;
@@ -32,23 +35,25 @@ public class ButtonLayer extends View {
         initWindowManager();
     }
 
+    /**
+     * Initialize the Window Manager
+     */
     private void initWindowManager() {
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.MATCH_PARENT,            //Width
+                WindowManager.LayoutParams.WRAP_CONTENT,            //Height
+                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,     //Overlay above everything
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL     //Don't react to touch events
+                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, //Allow to go anywhere on screen
                 PixelFormat.TRANSLUCENT);
         params.gravity = Gravity.BOTTOM;
-        params.y -= 145;
+        params.y -= 145; //move into navbar
 
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         windowManager.addView(relativeLayout, params);
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        // Here is the place where you can inject whatever layout you want.
         layoutInflater.inflate(R.layout.buttons, relativeLayout);
 
         ButterKnife.bind(this, relativeLayout);
@@ -57,6 +62,9 @@ public class ButtonLayer extends View {
         Utils.setScale(getContext(), Utils.getScale(getContext()), backButton, homeButton, recentsButton);
     }
 
+    /**
+     * Destroy the view
+     */
     public void destroy() {
         windowManager.removeView(relativeLayout);
     }
