@@ -3,4 +3,6 @@
     <string name="show_button_fill">Show Button Fill</string>
     <string name="scale">Scale</string>
     <string name="spacing">Spacing</string>
+    <string name="preview">Preview</string>
+    <string name="apply">apply</string>
 </resources>
