@@ -31,6 +31,11 @@ public class Utils {
         return sharedPref.getBoolean("enabled", false);
     }
 
+    public static boolean isFirstRun(Context c) {
+        SharedPreferences sharedPref = c.getSharedPreferences("first", Context.MODE_PRIVATE);
+        return sharedPref.getBoolean("first", true);
+    }
+
     public static void saveValue(Activity a, String type, int value) {
         SharedPreferences sharedPref = a.getSharedPreferences(type, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -42,6 +47,13 @@ public class Utils {
         SharedPreferences sharedPref = a.getSharedPreferences("enabled", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("enabled", enabled);
+        editor.apply();
+    }
+
+    public static void setFirst(Activity a, boolean enabled) {
+        SharedPreferences sharedPref = a.getSharedPreferences("first", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("first", enabled);
         editor.apply();
     }
 

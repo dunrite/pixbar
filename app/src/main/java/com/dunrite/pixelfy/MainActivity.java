@@ -33,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(Utils.isFirstRun(this)) {
+            Intent intent = new Intent(this, IntroActivity.class); //call Intro class
+            startActivity(intent);
+        }
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         activity = this;
@@ -50,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
                     }
                 }
+                restartService();
             }
         });
         spacingBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -101,7 +108,10 @@ public class MainActivity extends AppCompatActivity {
         scaleBar.setProgress(Utils.getScale(activity));
     }
 
-
+    private void restartService() {
+        stopService();
+        startService();
+    }
 
     private void startService() {
         startService(new Intent(this, NavbarService.class));
