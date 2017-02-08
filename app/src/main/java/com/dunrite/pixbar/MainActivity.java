@@ -3,6 +3,7 @@ package com.dunrite.pixbar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
     @BindView(R.id.homeButton) ImageView homeButton;
     @BindView(R.id.backButton) ImageView backButton;
     @BindView(R.id.recentsButton) ImageView recentsButton;
+    @BindView(R.id.card2) CardView navbarPreviewCard;
 
     //Guides
     @BindView(R.id.showGuideCheck) CheckBox showGuideCheck;
@@ -59,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
 
     public Activity activity;
 
+    public ImageView[] guides;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        guides = new ImageView[]{homeLeftGuide, homeRightGuide, backLeftGuide, backRightGuide,
+                recentsLeftGuide, recentsRightGuide};
         activity = this;
         initialize();
     }
@@ -242,6 +250,11 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
 
         recentsLeftGuide.setX((recentsButton.getX() + recentsButton.getWidth()/2) - recentsButton.getHeight()/2);
         recentsRightGuide.setX((recentsButton.getX() + recentsButton.getWidth()/2) + recentsButton.getHeight()/2);
+
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        float offset = size.y - (navbarPreviewCard.getY() + navbarPreviewCard.getHeight());
+        Utils.setGuideHeights(this, offset, guides);
     }
 
     private void showColorChooser() {

@@ -155,14 +155,22 @@ public class Utils {
      */
     public static void setScale(Context c, double scale,
                                 ImageView backButton, ImageView homeButton, ImageView recentsButton) {
-        double realScale = convertDpToPx(c, NAVBAR_HEIGHT_IN_DP * (scale/100));
-        homeButton.getLayoutParams().height = (int) realScale;
-        backButton.getLayoutParams().height = (int) realScale;
-        recentsButton.getLayoutParams().height = (int) realScale;
+        setScale(c, scale, backButton);
+        setScale(c, scale, homeButton);
+        setScale(c, scale, recentsButton);
+    }
 
-        homeButton.requestLayout();
-        backButton.requestLayout();
-        recentsButton.requestLayout();
+    public static void setScale(Context c, double scale, ImageView image) {
+        double realScale = convertDpToPx(c, NAVBAR_HEIGHT_IN_DP * (scale/100));
+        image.getLayoutParams().height = (int) realScale;
+        image.requestLayout();
+    }
+
+    public static void setGuideHeights(Context c, double height, ImageView[] guides) {
+        for (ImageView image : guides) {
+            image.getLayoutParams().height = (int)height;
+            image.requestLayout();
+        }
     }
 
     /**
