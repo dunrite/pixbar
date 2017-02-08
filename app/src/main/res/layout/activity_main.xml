@@ -11,7 +11,7 @@
     <!--GUIDES-->
     <ImageView
         android:layout_width="1dp"
-        android:layout_height="500dp"
+        android:layout_height="445dp"
         app:srcCompat="@color/colorAccent"
         android:id="@+id/backLeftGuide"
         android:layout_alignParentBottom="true"
@@ -19,7 +19,7 @@
         android:visibility="invisible"/>
     <ImageView
         android:layout_width="1dp"
-        android:layout_height="500dp"
+        android:layout_height="445dp"
         app:srcCompat="@color/colorAccent"
         android:id="@+id/backRightGuide"
         android:layout_alignParentBottom="true"
@@ -27,7 +27,7 @@
         android:visibility="gone"/>
     <ImageView
         android:layout_width="1dp"
-        android:layout_height="500dp"
+        android:layout_height="445dp"
         app:srcCompat="@color/colorAccent"
         android:id="@+id/homeLeftGuide"
         android:layout_alignParentBottom="true"
@@ -35,7 +35,7 @@
         android:visibility="invisible"/>
     <ImageView
         android:layout_width="1dp"
-        android:layout_height="500dp"
+        android:layout_height="445dp"
         app:srcCompat="@color/colorAccent"
         android:id="@+id/homeRightGuide"
         android:layout_alignParentBottom="true"
@@ -43,7 +43,7 @@
         android:visibility="invisible"/>
     <ImageView
         android:layout_width="1dp"
-        android:layout_height="500dp"
+        android:layout_height="445dp"
         app:srcCompat="@color/colorAccent"
         android:id="@+id/recentsLeftGuide"
         android:layout_alignParentBottom="true"
@@ -51,7 +51,7 @@
         android:visibility="invisible"/>
     <ImageView
         android:layout_width="1dp"
-        android:layout_height="500dp"
+        android:layout_height="445dp"
         app:srcCompat="@color/colorAccent"
         android:id="@+id/recentsRightGuide"
         android:layout_alignParentBottom="true"

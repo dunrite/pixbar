@@ -3,6 +3,8 @@ package com.dunrite.pixbar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -160,5 +162,17 @@ public class Utils {
     private static double convertDpToPx(Context c, double dp) {
         DisplayMetrics displayMetrics = c.getResources().getDisplayMetrics();
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+    }
+
+    /**
+     * Checks if app can draw over other apps
+     * @param c
+     * @return can draw over other apps
+     */
+    public static boolean hasDrawPermission(Context c) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return Settings.canDrawOverlays(c);
+        }
+        return true;
     }
 }

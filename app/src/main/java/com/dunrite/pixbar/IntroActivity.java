@@ -3,7 +3,6 @@ package com.dunrite.pixbar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -25,14 +24,16 @@ public class IntroActivity extends AppIntro2 {
 
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest.
-        addSlide(AppIntroFragment.newInstance("Welcome to Pixbar!",
-                "With this app, you can make your navigation buttons look like the ones on the Pixel!", R.mipmap.ic_launcher,
+        addSlide(AppIntroFragment.newInstance("Welcome!",
+                "With this app, you can make your navigation buttons look like the ones on the Pixel!", R.drawable.intro,
                 ContextCompat.getColor(this, R.color.colorAccent)));
 
-        addSlide(AppIntroFragment.newInstance("Allow Permissions",
-                "In order to function, you need to allow Pixbar to draw over apps",
-                R.mipmap.ic_launcher,
-                ContextCompat.getColor(this, R.color.colorAccent)));
+       if(!Utils.hasDrawPermission(this)){
+                addSlide(AppIntroFragment.newInstance("Please Allow Permissions",
+                        "In order to function, you need to allow Pixbar to draw over apps",
+                        R.drawable.check,
+                        ContextCompat.getColor(this, R.color.colorAccent)));
+        }
 
        // barColor(Color.parseColor("#3F51B5"));
         setIndicatorColor(ContextCompat.getColor(this, R.color.colorPrimary),
@@ -41,7 +42,6 @@ public class IntroActivity extends AppIntro2 {
         // Hide Skip/Done button.
         showSkipButton(false);
         setProgressButtonEnabled(true);
-
     }
 
     @Override
@@ -54,22 +54,15 @@ public class IntroActivity extends AppIntro2 {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         // Do something when users tap on Done button.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.canDrawOverlays(this)) {
+        if (!Utils.hasDrawPermission(this)) {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                         Uri.parse("package:" + getPackageName()));
                 startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
-            } else {
-                Utils.setFirst(this, false);
-                Intent intent = new Intent(this, MainActivity.class); //call Intro class
-                startActivity(intent);
-            }
         } else {
             Utils.setFirst(this, false);
             Intent intent = new Intent(this, MainActivity.class); //call Intro class
             startActivity(intent);
         }
-
     }
 
     @Override

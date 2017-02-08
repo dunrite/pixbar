@@ -2,10 +2,12 @@ package com.dunrite.pixbar;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -69,18 +71,8 @@ public class MainActivity extends AppCompatActivity {
      * Initialize everything for the activity
      */
     private void initialize() {
-        showGuideCheck.setChecked(Utils.showGuides(this));
         applyButton.setEnabled(Utils.isEnabled(this));
 
-        showGuideCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    showGuides();
-                else
-                    hideGuides();
-            }
-        });
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,10 +132,20 @@ public class MainActivity extends AppCompatActivity {
                 applyButton.setEnabled(isChecked);
             }
         });
+        showGuideCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    showGuides();
+                else
+                    hideGuides();
+            }
+        });
 
         serviceToggle.setChecked(Utils.isEnabled(activity));
         spacingBar.setProgress(Utils.getSpacing(activity));
         scaleBar.setProgress(Utils.getScale(activity));
+        showGuideCheck.setChecked(Utils.showGuides(this));
     }
 
     /**
@@ -158,7 +160,22 @@ public class MainActivity extends AppCompatActivity {
      * Start the service that shows the buttons on the navbar
      */
     private void startService() {
-        startService(new Intent(this, NavbarService.class));
+        if (Utils.hasDrawPermission(this)) {
+            startService(new Intent(this, NavbarService.class));
+        } else {
+            serviceToggle.setChecked(false);
+            Snackbar.make(findViewById(android.R.id.content), "You Need to Enable The Draw Permission", Snackbar.LENGTH_LONG)
+                    .setAction("Enable", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                    Uri.parse("package:" + getPackageName()));
+                            startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
+                        }
+                    }).setActionTextColor(Color.RED)
+                    .show();
+        }
+
     }
 
     /**
@@ -172,7 +189,6 @@ public class MainActivity extends AppCompatActivity {
      * Show guide lines that help with placement
      */
     private void showGuides() {
-        resetGuides();
         homeLeftGuide.setVisibility(View.VISIBLE);
         homeRightGuide.setVisibility(View.VISIBLE);
 
@@ -182,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
         recentsLeftGuide.setVisibility(View.VISIBLE);
         recentsRightGuide.setVisibility(View.VISIBLE);
         Utils.setShowGuides(this, true);
+        resetGuides();
     }
 
     /**

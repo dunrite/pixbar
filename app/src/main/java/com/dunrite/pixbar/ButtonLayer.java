@@ -47,7 +47,14 @@ public class ButtonLayer extends View {
                 | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, //Allow to go anywhere on screen
                 PixelFormat.TRANSLUCENT);
         params.gravity = Gravity.BOTTOM;
-        params.y -= 145; //move into navbar
+
+        // navigation bar height
+        int navigationBarHeight = 48;
+        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            navigationBarHeight = getResources().getDimensionPixelSize(resourceId);
+        }
+        params.y -= navigationBarHeight; //move into navbar
 
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         windowManager.addView(relativeLayout, params);
