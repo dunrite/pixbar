@@ -42,7 +42,7 @@ public class ButtonLayer extends View {
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,            //Width
                 WindowManager.LayoutParams.WRAP_CONTENT,            //Height
-                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,     //Overlay above everything
+                WindowManager.LayoutParams.TYPE_PHONE,     //Overlay above everything
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL     //Don't react to touch events
                 | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, //Allow to go anywhere on screen
                 PixelFormat.TRANSLUCENT);
