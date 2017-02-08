@@ -67,6 +67,7 @@ public class ButtonLayer extends View {
 
         Utils.setSpacing(getContext(), Utils.getSpacing(getContext()), homeButton);
         Utils.setScale(getContext(), Utils.getScale(getContext()), backButton, homeButton, recentsButton);
+        Utils.setColor(Utils.getColor(getContext()), backButton, homeButton, recentsButton);
     }
 
     /**

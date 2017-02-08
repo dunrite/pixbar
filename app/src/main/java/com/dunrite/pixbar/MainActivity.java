@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,13 +19,15 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Switch;
 
+import com.afollestad.materialdialogs.color.ColorChooserDialog;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * The Main Activity of the entire application
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ColorChooserDialog.ColorCallback {
     //Service toggles
     @BindView(R.id.serviceToggle) Switch serviceToggle;
 
@@ -48,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
     //Apply button
     @BindView(R.id.applyButton) Button applyButton;
 
+    //color chooser
+    @BindView(R.id.colorChooser) Button colorChooser;
+
     public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
 
     public Activity activity;
@@ -71,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
      * Initialize everything for the activity
      */
     private void initialize() {
+        updateColor();
         applyButton.setEnabled(Utils.isEnabled(this));
 
         applyButton.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +147,12 @@ public class MainActivity extends AppCompatActivity {
                     showGuides();
                 else
                     hideGuides();
+            }
+        });
+        colorChooser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showColorChooser();
             }
         });
 
@@ -228,6 +242,42 @@ public class MainActivity extends AppCompatActivity {
 
         recentsLeftGuide.setX((recentsButton.getX() + recentsButton.getWidth()/2) - recentsButton.getHeight()/2);
         recentsRightGuide.setX((recentsButton.getX() + recentsButton.getWidth()/2) + recentsButton.getHeight()/2);
+    }
+
+    private void showColorChooser() {
+        // Pass AppCompatActivity which implements ColorCallback, along with the title of the dialog
+        new ColorChooserDialog.Builder(this, R.string.color_palette)
+                .doneButton(R.string.md_done_label)  // changes label of the done button
+                .cancelButton(R.string.md_cancel_label)  // changes label of the cancel button
+                .backButton(R.string.md_back_label)  // changes label of the back button
+                .dynamicButtonColor(true)  // defaults to true, false will disable changing action buttons' color to currently selected color
+                .show();
+    }
+    @Override
+    public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int selectedColor) {
+        Utils.saveValue(this, "color", selectedColor);
+        updateColor();
+    }
+
+    @Override
+    public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {
+
+    }
+
+    private void updateColor() {
+        int color = Utils.getColor(this);
+        Utils.setColor(color, backButton, homeButton, recentsButton);
+        updateColorChooserLook(color);
+    }
+
+    private void updateColorChooserLook(@ColorInt int color) {
+        String hex = String.format("#%06X", (0xFFFFFF & color));
+        if (hex.startsWith("#000")) {
+            colorChooser.setTextColor(Color.BLACK);
+        } else {
+            colorChooser.setTextColor(color);
+        }
+        colorChooser.setText(hex);
     }
 }
 

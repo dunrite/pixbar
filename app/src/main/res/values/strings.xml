@@ -6,4 +6,6 @@
     <string name="preview">Preview</string>
     <string name="apply">apply</string>
     <string name="show_guides">Show Guides</string>
+    <string name="color_palette">Color Palette</string>
+    <string name="color">Color</string>
 </resources>

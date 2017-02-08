@@ -3,8 +3,10 @@ package com.dunrite.pixbar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.ColorInt;
 import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -39,6 +41,16 @@ public class Utils {
     public static int getSpacing(Context c) {
         SharedPreferences sharedPref = c.getSharedPreferences("spacing", Context.MODE_PRIVATE);
         return sharedPref.getInt("spacing", 50);
+    }
+
+    /**
+     * Gets color for the buttons
+     * @param c context
+     * @return color of buttons
+     */
+    public static int getColor(Context c) {
+        SharedPreferences sharedPref = c.getSharedPreferences("color", Context.MODE_PRIVATE);
+        return sharedPref.getInt("color", Color.WHITE);
     }
 
     /**
@@ -151,6 +163,20 @@ public class Utils {
         homeButton.requestLayout();
         backButton.requestLayout();
         recentsButton.requestLayout();
+    }
+
+    /**
+     * Saves the value of the color for all of the buttons in service anc button preview
+     * @param color color
+     * @param backButton reference to back button
+     * @param homeButton reference to home button
+     * @param recentsButton reference to recents button
+     */
+    public static void setColor(@ColorInt int color,
+                                ImageView backButton, ImageView homeButton, ImageView recentsButton) {
+        backButton.setColorFilter(color);
+        homeButton.setColorFilter(color);
+        recentsButton.setColorFilter(color);
     }
 
     /**
