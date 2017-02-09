@@ -2,6 +2,7 @@ package com.dunrite.pixbar;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,9 +40,21 @@ public class ButtonLayer extends View {
      * Initialize the Window Manager
      */
     private void initWindowManager() {
+
+        int width;
+        int height;
+        if (Utils.getOrientation(getResources()) == 1) {
+            width = WindowManager.LayoutParams.MATCH_PARENT;
+            height = WindowManager.LayoutParams.WRAP_CONTENT;
+        } else {
+            height = WindowManager.LayoutParams.MATCH_PARENT;
+            width = WindowManager.LayoutParams.WRAP_CONTENT;
+        }
+        windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,            //Width
-                WindowManager.LayoutParams.WRAP_CONTENT,            //Height
+                width,            //Width
+                height,            //Height
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,//Overlay above everything
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL     //Don't react to touch events
                 | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS //Allow to go anywhere on screen
@@ -50,13 +63,18 @@ public class ButtonLayer extends View {
         System.out.println(Utils.getOrientation((getResources())));
         if (Utils.getOrientation(getResources()) == 1) {
             params.gravity = Gravity.BOTTOM | Gravity.LEFT;
+            params.y = -Utils.getNavigationBarHeight(getResources()); //move into navbar
         } else {
-            params.gravity = Gravity.TOP | Gravity.RIGHT;
-            params.y = -Utils.getStatusBarHeight(getResources());
-        }
-        params.y = -Utils.getNavigationBarHeight(getResources()); //move into navbar
+            params.gravity = Gravity.RIGHT;
+            params.x = -Utils.getNavigationBarHeight(getResources());
+            params.y -= 0.5 * Utils.getStatusBarHeight(getResources());
 
-        windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            windowManager.getDefaultDisplay().getMetrics(displaymetrics);
+            int h = displaymetrics.heightPixels;
+
+            params.height = h + (Utils.getStatusBarHeight(getResources())/2);
+        }
         windowManager.addView(relativeLayout, params);
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -64,9 +82,11 @@ public class ButtonLayer extends View {
         layoutInflater.inflate(R.layout.buttons, relativeLayout);
 
         ButterKnife.bind(this, relativeLayout);
-
-        Utils.setSpacing(getContext(), Utils.getSpacing(getContext()), homeButton);
-        Utils.setScale(getContext(), Utils.getScale(getContext()), backButton, homeButton, recentsButton);
+        if (Utils.getOrientation(getResources()) != 1)
+            Utils.setSpacing(getContext(), Utils.getSpacing(getContext())*1.4, homeButton, Utils.getOrientation(getResources()));
+        else
+            Utils.setSpacing(getContext(), Utils.getSpacing(getContext()), homeButton, Utils.getOrientation(getResources()));
+        Utils.setScale(getContext(), Utils.getScale(getContext()), backButton, homeButton, recentsButton, 1);
         Utils.setColor(Utils.getColor(getContext()), backButton, homeButton, recentsButton);
     }
 

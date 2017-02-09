@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //System.out.println("Spacing set to " + progress);
-                Utils.setSpacing(getApplicationContext(), progress, homeButton);
+                Utils.setSpacing(getApplicationContext(), progress, homeButton, 1);
                 resetGuides();
             }
 
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
         scaleBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Utils.setScale(getApplicationContext(), progress, backButton, homeButton, recentsButton);
+                Utils.setScale(getApplicationContext(), progress, backButton, homeButton, recentsButton, 1);
                 resetGuides();
             }
 
@@ -285,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
 
     private void updateColorChooserLook(@ColorInt int color) {
         String hex = String.format("#%06X", (0xFFFFFF & color));
-        System.out.println("HEX IS " + hex);
+        //System.out.println("HEX IS " + hex);
         if (hex.startsWith("#000")) {
             colorChooser.setTextColor(Color.BLACK);
         } else {

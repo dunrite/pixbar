@@ -138,10 +138,17 @@ public class Utils {
      * @param spacing spacing in px
      * @param homeButton the home button, which stays in the center
      */
-    public static void setSpacing(Context c, double spacing, ImageView homeButton) {
-        double realSpacing = convertDpToPx(c, DEFAULT_SPACING * (spacing/100));
+    public static void setSpacing(Context c, double spacing, ImageView homeButton, int orientation) {
+        double realSpacing;
         ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) homeButton.getLayoutParams();
-        marginParams.setMargins((int) realSpacing, 0, (int) realSpacing, 0);
+        if (orientation == 1) {
+            realSpacing = convertDpToPx(c, DEFAULT_SPACING * (spacing/100));
+            marginParams.setMargins((int) realSpacing, 0, (int) realSpacing, 0);
+        } else {
+            realSpacing = convertDpToPx(c, DEFAULT_SPACING * (spacing/100));
+            //System.out.println(realSpacing);
+            marginParams.setMargins(0, (int) realSpacing, 0, (int) realSpacing);
+        }
         homeButton.requestLayout();
     }
 
@@ -154,15 +161,18 @@ public class Utils {
      * @param recentsButton reference to the recents button object
      */
     public static void setScale(Context c, double scale,
-                                ImageView backButton, ImageView homeButton, ImageView recentsButton) {
-        setScale(c, scale, backButton);
-        setScale(c, scale, homeButton);
-        setScale(c, scale, recentsButton);
+                                ImageView backButton, ImageView homeButton, ImageView recentsButton, int orientation) {
+        setScale(c, scale, backButton, orientation);
+        setScale(c, scale, homeButton, orientation);
+        setScale(c, scale, recentsButton, orientation);
     }
 
-    public static void setScale(Context c, double scale, ImageView image) {
+    public static void setScale(Context c, double scale, ImageView image, int orientation) {
         double realScale = convertDpToPx(c, NAVBAR_HEIGHT_IN_DP * (scale/100));
-        image.getLayoutParams().height = (int) realScale;
+        if (orientation == 1)
+            image.getLayoutParams().height = (int) realScale;
+        else
+            image.getLayoutParams().width = (int) realScale;
         image.requestLayout();
     }
 
