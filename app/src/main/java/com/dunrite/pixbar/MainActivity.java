@@ -285,6 +285,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
 
     private void updateColorChooserLook(@ColorInt int color) {
         String hex = String.format("#%06X", (0xFFFFFF & color));
+        System.out.println("HEX IS " + hex);
         if (hex.startsWith("#000")) {
             colorChooser.setTextColor(Color.BLACK);
         } else {

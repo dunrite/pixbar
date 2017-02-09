@@ -28,6 +28,7 @@ public class NavbarService extends Service {
     @Override
     public void onDestroy() {
         //logServiceEnded();
+        super.onDestroy();
         stopForeground(true);
         destroyButtonLayer();
     }

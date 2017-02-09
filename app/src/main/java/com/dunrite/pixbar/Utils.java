@@ -3,7 +3,7 @@ package com.dunrite.pixbar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.content.res.Resources;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.ColorInt;
@@ -50,7 +50,7 @@ public class Utils {
      */
     public static int getColor(Context c) {
         SharedPreferences sharedPref = c.getSharedPreferences("color", Context.MODE_PRIVATE);
-        return sharedPref.getInt("color", Color.WHITE);
+        return sharedPref.getInt("color", 0x00000);
     }
 
     /**
@@ -208,5 +208,25 @@ public class Utils {
             return Settings.canDrawOverlays(c);
         }
         return true;
+    }
+
+    public static int getOrientation(Resources resources) {
+        return resources.getConfiguration().orientation;
+    }
+
+    public static int getNavigationBarHeight(Resources resources) {
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId <= 0) {
+            return 0;
+        }
+        return resources.getDimensionPixelSize(resourceId);
+    }
+
+    public static int getStatusBarHeight(Resources resources) {
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            return resources.getDimensionPixelSize(resourceId);
+        }
+        return 0;
     }
 }

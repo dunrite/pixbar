@@ -42,19 +42,19 @@ public class ButtonLayer extends View {
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,            //Width
                 WindowManager.LayoutParams.WRAP_CONTENT,            //Height
-                WindowManager.LayoutParams.TYPE_PHONE,     //Overlay above everything
+                WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,//Overlay above everything
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL     //Don't react to touch events
-                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, //Allow to go anywhere on screen
+                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS //Allow to go anywhere on screen
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
-        params.gravity = Gravity.BOTTOM;
-
-        // navigation bar height
-        int navigationBarHeight = 48;
-        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            navigationBarHeight = getResources().getDimensionPixelSize(resourceId);
+        System.out.println(Utils.getOrientation((getResources())));
+        if (Utils.getOrientation(getResources()) == 1) {
+            params.gravity = Gravity.BOTTOM | Gravity.LEFT;
+        } else {
+            params.gravity = Gravity.TOP | Gravity.RIGHT;
+            params.y = -Utils.getStatusBarHeight(getResources());
         }
-        params.y -= navigationBarHeight; //move into navbar
+        params.y = -Utils.getNavigationBarHeight(getResources()); //move into navbar
 
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         windowManager.addView(relativeLayout, params);
@@ -76,4 +76,5 @@ public class ButtonLayer extends View {
     public void destroy() {
         windowManager.removeView(relativeLayout);
     }
+
 }
