@@ -34,6 +34,10 @@ public class NavbarService extends Service {
         destroyButtonLayer();
     }
 
+    /**
+     * Detecting device orientation change
+     * @param newConfig the new configuration changed to
+     */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);

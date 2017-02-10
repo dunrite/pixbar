@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
         serviceToggle.setChecked(Utils.isEnabled(activity));
         spacingBar.setProgress(Utils.getSpacing(activity));
         scaleBar.setProgress(Utils.getScale(activity));
-        showGuideCheck.setChecked(Utils.showGuides(this));
+        //showGuideCheck.setChecked(Utils.showGuides(this));
     }
 
     /**
@@ -293,6 +293,9 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
         Utils.setGuideHeights(this, offset, guides);
     }
 
+    /**
+     * Shows color chooser dialog
+     */
     private void showColorChooser() {
         // Pass AppCompatActivity which implements ColorCallback, along with the title of the dialog
         new ColorChooserDialog.Builder(this, R.string.color_palette)
@@ -302,16 +305,24 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
                 .dynamicButtonColor(true)  // defaults to true, false will disable changing action buttons' color to currently selected color
                 .show();
     }
+
+    /**
+     * When color is chosen in color chooser dialog
+     * @param dialog the dialog used
+     * @param selectedColor the color selected
+     */
     @Override
     public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int selectedColor) {
         Utils.saveValue(this, "color", selectedColor);
         updateColor();
     }
 
+    /**
+     * When color chooser is dismissed
+     * @param dialog the dismissed dialog
+     */
     @Override
-    public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {
-
-    }
+    public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {}
 
     private void updateColor() {
         int color = Utils.getColor(this);
@@ -319,10 +330,14 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
         updateColorChooserLook(color);
     }
 
+    /**
+     * Updates the appearance of the color choosing
+     * @param color the color to set the text to
+     */
     private void updateColorChooserLook(@ColorInt int color) {
         String hex = String.format("#%06X", (0xFFFFFF & color));
         //System.out.println("HEX IS " + hex);
-        if (hex.startsWith("#000")) {
+        if (hex.startsWith("#000") || hex.startsWith("#FFF")) {
             colorChooser.setTextColor(Color.BLACK);
         } else {
             colorChooser.setTextColor(color);

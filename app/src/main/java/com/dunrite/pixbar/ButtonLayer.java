@@ -40,20 +40,20 @@ public class ButtonLayer extends View {
      * Initialize the Window Manager
      */
     private void initWindowManager() {
-        int width;
-        int height;
+        int wmWidth;
+        int wmHeight;
         if (Utils.getOrientation(getResources()) == 1) {
-            width = WindowManager.LayoutParams.MATCH_PARENT;
-            height = WindowManager.LayoutParams.WRAP_CONTENT;
+            wmWidth = WindowManager.LayoutParams.MATCH_PARENT;
+            wmHeight = WindowManager.LayoutParams.WRAP_CONTENT;
         } else {
-            height = WindowManager.LayoutParams.MATCH_PARENT;
-            width = WindowManager.LayoutParams.WRAP_CONTENT;
+            wmHeight = WindowManager.LayoutParams.MATCH_PARENT;
+            wmWidth = WindowManager.LayoutParams.WRAP_CONTENT;
         }
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                width,            //Width
-                height,            //Height
+                wmWidth,            //Width
+                wmHeight,            //Height
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,//Overlay above everything
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL     //Don't react to touch events
                 | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS //Allow to go anywhere on screen
