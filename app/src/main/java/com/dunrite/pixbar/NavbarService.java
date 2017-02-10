@@ -37,6 +37,9 @@ public class NavbarService extends Service {
      * Initialize the buttons
      */
     private void initButtonLayer() {
+        if (buttonLayer != null) {
+            buttonLayer.destroy();
+        }
         buttonLayer = new ButtonLayer(this);
     }
 

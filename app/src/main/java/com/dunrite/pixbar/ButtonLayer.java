@@ -40,7 +40,6 @@ public class ButtonLayer extends View {
      * Initialize the Window Manager
      */
     private void initWindowManager() {
-
         int width;
         int height;
         if (Utils.getOrientation(getResources()) == 1) {
