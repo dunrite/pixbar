@@ -86,6 +86,20 @@ public class ButtonLayer extends View {
         //Scale should be automatically handled now
         //Utils.setScale(getContext(), Utils.getScale(getContext()), backButton, homeButton, recentsButton, 1);
         Utils.setColor(Utils.getColor(getContext()), backButton, homeButton, recentsButton);
+
+        //Show and hide with the navigation bar
+        relativeLayout.setOnSystemUiVisibilityChangeListener(new OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if((visibility & SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                    //System.out.println("System Bars Visible");
+                    relativeLayout.setVisibility(VISIBLE);
+                } else {
+                    //System.out.println("System Bars NOT Visible");
+                    relativeLayout.setVisibility(INVISIBLE);
+                }
+            }
+        });
     }
 
     /**
