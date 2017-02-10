@@ -2,6 +2,7 @@ package com.dunrite.pixbar;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.IBinder;
 import android.widget.Toast;
 
@@ -31,6 +32,13 @@ public class NavbarService extends Service {
         super.onDestroy();
         stopForeground(true);
         destroyButtonLayer();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        //System.out.println("CONFIG CHANGED");
+        initButtonLayer();
     }
 
     /**

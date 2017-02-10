@@ -59,7 +59,7 @@ public class ButtonLayer extends View {
                 | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS //Allow to go anywhere on screen
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
-        System.out.println(Utils.getOrientation((getResources())));
+        //System.out.println(Utils.getOrientation((getResources())));
         if (Utils.getOrientation(getResources()) == 1) {
             params.gravity = Gravity.BOTTOM | Gravity.LEFT;
             params.y = -Utils.getNavigationBarHeight(getResources()); //move into navbar
