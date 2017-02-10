@@ -79,6 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp">
+            <!--DON'T SHOW THIS ANYMORE-->
             <TextView
                 android:text="@string/scale"
                 android:layout_width="match_parent"
@@ -94,6 +95,7 @@
                 android:layout_below="@+id/scaleLabel"
                 android:progress="49"
                 android:visibility="gone"/>
+            <!--END DON'T SHOW            -->
 
             <TextView
                 android:text="@string/spacing"
