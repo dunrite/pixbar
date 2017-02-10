@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(Utils.isFirstRun(this)) {
+        if (Utils.isFirstRun(this)) {
             Intent intent = new Intent(this, IntroActivity.class); //call Intro class
             startActivity(intent);
         }
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
         scaleBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Utils.setScale(getApplicationContext(), progress, backButton, homeButton, recentsButton, 1);
+                //Utils.setScale(getApplicationContext(), progress, backButton, homeButton, recentsButton, 1);
                 resetGuides();
             }
 
@@ -242,14 +242,15 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
      * Reset the position of the guide lines
      */
     private void resetGuides() {
-        homeLeftGuide.setX((homeButton.getX() + homeButton.getWidth()/2) - homeButton.getHeight()/2);
-        homeRightGuide.setX((homeButton.getX() + homeButton.getWidth()/2) + homeButton.getHeight()/2);
+        //homeLeftGuide.setX(homeButton.getX() + ((float) Utils.convertDpToPx(getApplicationContext(), 16)));
+        homeLeftGuide.setX((homeButton.getX() + homeButton.getWidth()/2) - (float) Utils.convertDpToPx(getApplicationContext(), 16)/2);
+        homeRightGuide.setX((homeButton.getX() + homeButton.getWidth()/2) + (float) Utils.convertDpToPx(getApplicationContext(), 16)/2);
 
-        backLeftGuide.setX((backButton.getX() + backButton.getWidth()/2) - backButton.getHeight()/2);
-        backRightGuide.setX((backButton.getX() + backButton.getWidth()/2) + backButton.getHeight()/2);
+        backLeftGuide.setX((backButton.getX() + backButton.getWidth()/2)- (float) Utils.convertDpToPx(getApplicationContext(), 16)/2);
+        backRightGuide.setX((backButton.getX() + backButton.getWidth()/2) + (float) Utils.convertDpToPx(getApplicationContext(), 16)/2);
 
-        recentsLeftGuide.setX((recentsButton.getX() + recentsButton.getWidth()/2) - recentsButton.getHeight()/2);
-        recentsRightGuide.setX((recentsButton.getX() + recentsButton.getWidth()/2) + recentsButton.getHeight()/2);
+        recentsLeftGuide.setX((recentsButton.getX() + recentsButton.getWidth()/2) - (float) Utils.convertDpToPx(getApplicationContext(), 16)/2);
+        recentsRightGuide.setX((recentsButton.getX() + recentsButton.getWidth()/2) +  (float) Utils.convertDpToPx(getApplicationContext(), 16)/2);
 
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);

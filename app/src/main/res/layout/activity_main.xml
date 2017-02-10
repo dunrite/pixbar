@@ -84,21 +84,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:id="@+id/scaleLabel"/>
+                android:id="@+id/scaleLabel"
+                android:visibility="gone"/>
 
             <SeekBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/scaleBar"
                 android:layout_below="@+id/scaleLabel"
-                android:progress="49"/>
+                android:progress="49"
+                android:visibility="gone"/>
 
             <TextView
                 android:text="@string/spacing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/scaleBar"
-                android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
                 android:id="@+id/spacingLabel"/>
 
@@ -165,9 +166,10 @@
 
             <!--HOME-->
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="48dp"
                 app:srcCompat="@drawable/home"
+                android:padding="16dp"
                 android:id="@+id/homeButton"
                 android:layout_marginLeft="85dp"
                 android:layout_marginRight="85dp"
@@ -176,18 +178,20 @@
 
             <!--RECENTS-->
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="48dp"
                 app:srcCompat="@drawable/recents"
+                android:padding="16dp"
                 android:id="@+id/recentsButton"
                 android:layout_toEndOf="@id/homeButton"
                 android:layout_centerVertical="true"/>
 
             <!--BACK-->
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="48dp"
                 app:srcCompat="@drawable/back"
+                android:padding="16dp"
                 android:id="@+id/backButton"
                 android:layout_toStartOf="@id/homeButton"
                 android:layout_centerVertical="true"/>

@@ -82,11 +82,10 @@ public class ButtonLayer extends View {
         layoutInflater.inflate(R.layout.buttons, relativeLayout);
 
         ButterKnife.bind(this, relativeLayout);
-        if (Utils.getOrientation(getResources()) != 1)
-            Utils.setSpacing(getContext(), Utils.getSpacing(getContext())*1.4, homeButton, Utils.getOrientation(getResources()));
-        else
-            Utils.setSpacing(getContext(), Utils.getSpacing(getContext()), homeButton, Utils.getOrientation(getResources()));
-        Utils.setScale(getContext(), Utils.getScale(getContext()), backButton, homeButton, recentsButton, 1);
+
+        Utils.setSpacing(getContext(), Utils.getSpacing(getContext()), homeButton, Utils.getOrientation(getResources()));
+        //Scale should be automatically handled now
+        //Utils.setScale(getContext(), Utils.getScale(getContext()), backButton, homeButton, recentsButton, 1);
         Utils.setColor(Utils.getColor(getContext()), backButton, homeButton, recentsButton);
     }
 

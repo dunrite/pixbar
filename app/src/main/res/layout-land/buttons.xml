@@ -5,24 +5,27 @@
     android:id="@+id/buttonsView">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="80dp"
+        android:padding="16dp"
         android:src="@drawable/home"
         android:id="@+id/homeButtonS"
         android:layout_centerInParent="true"
         android:layout_centerVertical="true" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="80dp"
+        android:padding="16dp"
         android:src="@drawable/back"
         android:id="@+id/backButtonS"
         android:layout_below="@id/homeButtonS"
         android:layout_centerVertical="true" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="80dp"
+        android:padding="16dp"
         android:src="@drawable/recents"
         android:id="@+id/recentsButtonS"
         android:layout_above="@id/homeButtonS"

@@ -203,7 +203,7 @@ public class Utils {
      * @param dp value in dp
      * @return value in pixels
      */
-    private static double convertDpToPx(Context c, double dp) {
+    public static double convertDpToPx(Context c, double dp) {
         DisplayMetrics displayMetrics = c.getResources().getDisplayMetrics();
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
