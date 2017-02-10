@@ -1,4 +1,4 @@
-package com.dunrite.pixbar;
+package com.dunrite.pixbar.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -22,6 +24,9 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
+import com.dunrite.pixbar.NavbarService;
+import com.dunrite.pixbar.R;
+import com.dunrite.pixbar.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -168,6 +173,36 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
         spacingBar.setProgress(Utils.getSpacing(activity));
         scaleBar.setProgress(Utils.getScale(activity));
         showGuideCheck.setChecked(Utils.showGuides(this));
+    }
+
+    /**
+     * Inflate the overflow menu in the actionbar
+     * @param menu the menu
+     * @return inflated
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    /**
+     * Handle the overflow menu in the actionbar
+     * @param item the selected item
+     * @return super call
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_about) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**

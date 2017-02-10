@@ -8,4 +8,10 @@
     <string name="show_guides">Show Guides</string>
     <string name="color_palette">Color Palette</string>
     <string name="color">Color</string>
+    <string name="about">About</string>
+    <string name="version">Version</string>
+    <string name="developer">developer</string>
+    <string name="jaxon_wright">Jaxon Wright</string>
+    <string name="libraries">AppIntro by Paolo Rotolo\nMaterial Dialogs by Aiden Follestad\nButterknife by Jake Wharton</string>
+    <string name="libraries_used">libraries used</string>
 </resources>

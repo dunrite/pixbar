@@ -1,4 +1,4 @@
-package com.dunrite.pixbar;
+package com.dunrite.pixbar.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
+import com.dunrite.pixbar.R;
+import com.dunrite.pixbar.Utils;
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
@@ -60,8 +62,8 @@ public class IntroActivity extends AppIntro2 {
                 startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
         } else {
             Utils.setFirst(this, false);
-            Intent intent = new Intent(this, MainActivity.class); //call Intro class
-            startActivity(intent);
+           // Intent intent = new Intent(this, MainActivity.class); //call Intro class
+            //startActivity(intent);
         }
     }
 
