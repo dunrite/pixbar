@@ -14,6 +14,9 @@ public class NavbarService extends Service {
 
     private ButtonLayer buttonLayer;
 
+    public NavbarService() {
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -24,6 +27,11 @@ public class NavbarService extends Service {
         //logServiceStarted();
         initButtonLayer();
         return START_STICKY;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
     }
 
     @Override
@@ -48,7 +56,7 @@ public class NavbarService extends Service {
     /**
      * Initialize the buttons
      */
-    private void initButtonLayer() {
+    public void initButtonLayer() {
         if (buttonLayer != null) {
             destroyButtonLayer();
         }
@@ -78,3 +86,5 @@ public class NavbarService extends Service {
     }
 
 }
+
+

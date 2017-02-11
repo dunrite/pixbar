@@ -2,10 +2,12 @@ package com.dunrite.pixbar;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.graphics.Point;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,6 +20,9 @@ import butterknife.ButterKnife;
  */
 public class ButtonLayer extends View {
     private Context context;
+    private View keyboardView;
+    private boolean keyboardOpen;
+    private Point displaySize;
     private RelativeLayout relativeLayout;
     private WindowManager windowManager;
     @BindView(R.id.homeButtonS) ImageView homeButton;
@@ -31,6 +36,10 @@ public class ButtonLayer extends View {
     public ButtonLayer(Context context) {
         super(context);
         this.context = context;
+        this.keyboardOpen = false;
+        this.displaySize = new Point();
+
+        keyboardView = new View(this.context);
         relativeLayout = new RelativeLayout(this.context);
 
         initWindowManager();
@@ -38,6 +47,7 @@ public class ButtonLayer extends View {
 
     /**
      * Initialize the Window Manager
+     * TODO: THIS METHOD IS A MESS
      */
     private void initWindowManager() {
         int wmWidth;
@@ -50,6 +60,10 @@ public class ButtonLayer extends View {
             wmWidth = WindowManager.LayoutParams.WRAP_CONTENT;
         }
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(displaymetrics);
+        displaySize.set(displaymetrics.widthPixels, displaymetrics.heightPixels);
 
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 wmWidth,            //Width
@@ -67,11 +81,7 @@ public class ButtonLayer extends View {
             params.gravity = Gravity.RIGHT;
             params.x = -Utils.getNavigationBarHeight(getResources());
             params.y -= 0.5 * Utils.getStatusBarHeight(getResources());
-
-            DisplayMetrics displaymetrics = new DisplayMetrics();
-            windowManager.getDefaultDisplay().getMetrics(displaymetrics);
             int h = displaymetrics.heightPixels;
-
             params.height = h + (Utils.getStatusBarHeight(getResources())/2);
         }
         windowManager.addView(relativeLayout, params);
@@ -79,6 +89,12 @@ public class ButtonLayer extends View {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         layoutInflater.inflate(R.layout.buttons, relativeLayout);
+
+        keyboardView = layoutInflater.inflate(R.layout.keyboardview, null, false);
+        windowManager.addView(keyboardView, keyboardLayoutParams());
+
+
+        this.keyboardView.getViewTreeObserver().addOnGlobalLayoutListener(new keyboardListener());
 
         ButterKnife.bind(this, relativeLayout);
 
@@ -100,6 +116,8 @@ public class ButtonLayer extends View {
                 }
             }
         });
+
+        windowManager.updateViewLayout(keyboardView, keyboardLayoutParams());
     }
 
     /**
@@ -107,6 +125,43 @@ public class ButtonLayer extends View {
      */
     public void destroy() {
         windowManager.removeView(relativeLayout);
+        windowManager.removeView(keyboardView);
+    }
+
+    /**
+     * Rotates the back button. Called by the layout listener attached to the keyboardView
+     */
+    private void rotateBackButton() {
+        if (keyboardOpen)
+            backButton.setRotation(-90);
+        else
+            backButton.setRotation(0);
+    }
+
+    /**
+     * Layout Parameters for the invisible keyboard view that is used to detect the keyboard
+     * @return layout params
+     */
+    private WindowManager.LayoutParams keyboardLayoutParams() {
+        return new WindowManager.LayoutParams(1, -1, WindowManager.LayoutParams.TYPE_PHONE, 131096,
+                PixelFormat.TRANSLUCENT);
+    }
+
+    /**
+     * Listens for layout changes and is able to see if the keyboard is open
+     */
+    class keyboardListener implements ViewTreeObserver.OnGlobalLayoutListener {
+        public keyboardListener() {}
+
+        @Override
+        public void onGlobalLayout() {
+            int navBarH = Utils.getNavigationBarHeight(getResources());
+            int statusBarH = Utils.getStatusBarHeight(getResources());
+
+            ButtonLayer.this.keyboardOpen = ButtonLayer.this.keyboardView.getBottom() <
+                    (displaySize.y - navBarH - statusBarH);
+            rotateBackButton();
+        }
     }
 
 }

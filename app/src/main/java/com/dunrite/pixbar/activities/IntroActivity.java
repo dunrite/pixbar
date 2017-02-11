@@ -62,8 +62,8 @@ public class IntroActivity extends AppIntro2 {
                 startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
         } else {
             Utils.setFirst(this, false);
-           // Intent intent = new Intent(this, MainActivity.class); //call Intro class
-            //startActivity(intent);
+            Intent intent = new Intent(this, MainActivity.class); //call Intro class
+            startActivity(intent);
         }
     }
 
