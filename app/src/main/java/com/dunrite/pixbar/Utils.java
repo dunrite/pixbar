@@ -64,6 +64,16 @@ public class Utils {
     }
 
     /**
+     * checks if service is enabled on boot
+     * @param c context
+     * @return enabled
+     */
+    public static boolean isEnabledOnBoot(Context c) {
+        SharedPreferences sharedPref = c.getSharedPreferences("boot", Context.MODE_PRIVATE);
+        return sharedPref.getBoolean("boot", false);
+    }
+
+    /**
      * checks if this is the first time running the app
      * @param c context
      * @return isFirst
@@ -105,6 +115,18 @@ public class Utils {
         SharedPreferences sharedPref = a.getSharedPreferences("enabled", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("enabled", enabled);
+        editor.apply();
+    }
+
+    /**
+     * Saves that the service is enabled on bootin shared prefs
+     * @param a activity
+     * @param enabled isServiceEnabled
+     */
+    public static void setOnBoot(Activity a, boolean enabled) {
+        SharedPreferences sharedPref = a.getSharedPreferences("boot", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("boot", enabled);
         editor.apply();
     }
 

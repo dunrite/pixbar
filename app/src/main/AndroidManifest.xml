@@ -3,6 +3,7 @@
     package="com.dunrite.pixbar">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +22,11 @@
             android:label="@string/about"
             android:parentActivityName=".activities.MainActivity" />
         <service android:name="com.dunrite.pixbar.NavbarService" />
+        <receiver android:name=".OnBootBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

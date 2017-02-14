@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
 
@@ -31,12 +32,16 @@ import com.dunrite.pixbar.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.view.View.GONE;
+
 /**
  * The Main Activity of the entire application
  */
 public class MainActivity extends AppCompatActivity implements ColorChooserDialog.ColorCallback {
     //Service toggles
     @BindView(R.id.serviceToggle) Switch serviceToggle;
+    @BindView(R.id.runOnBootCheck) CheckBox runOnBootCheck;
+    @BindView(R.id.runOnBoot) LinearLayout runOnBootContainer;
 
     //Seekbars
     @BindView(R.id.scaleBar) SeekBar scaleBar;
@@ -93,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
     private void initialize() {
         updateColor();
         applyButton.setEnabled(Utils.isEnabled(this));
+        runOnBootCheck.setChecked(Utils.isEnabledOnBoot(this));
 
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,10 +152,14 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Utils.setEnabled(activity, isChecked);
-                if(isChecked)
+                if(isChecked) {
                     startService();
-                else
+                    runOnBootContainer.setVisibility(View.VISIBLE);
+                } else{
                     stopService();
+                    runOnBootCheck.setChecked(false);
+                    runOnBootContainer.setVisibility(GONE);
+                }
                 applyButton.setEnabled(isChecked);
             }
         });
@@ -160,6 +170,12 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
                     showGuides();
                 else
                     hideGuides();
+            }
+        });
+        runOnBootCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Utils.setOnBoot(activity, isChecked);
             }
         });
         colorChooser.setOnClickListener(new View.OnClickListener() {
@@ -262,14 +278,14 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
      * Hide guide lines that help with placement
      */
     private void hideGuides() {
-        homeLeftGuide.setVisibility(View.GONE);
-        homeRightGuide.setVisibility(View.GONE);
+        homeLeftGuide.setVisibility(GONE);
+        homeRightGuide.setVisibility(GONE);
 
-        backLeftGuide.setVisibility(View.GONE);
-        backRightGuide.setVisibility(View.GONE);
+        backLeftGuide.setVisibility(GONE);
+        backRightGuide.setVisibility(GONE);
 
-        recentsLeftGuide.setVisibility(View.GONE);
-        recentsRightGuide.setVisibility(View.GONE);
+        recentsLeftGuide.setVisibility(GONE);
+        recentsRightGuide.setVisibility(GONE);
         Utils.setShowGuides(this, true);
     }
 
