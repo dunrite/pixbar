@@ -50,41 +50,16 @@ public class ButtonLayer extends View {
      * TODO: THIS METHOD IS A MESS
      */
     private void initWindowManager() {
-        int wmWidth;
-        int wmHeight;
-        if (Utils.getOrientation(getResources()) == 1) {
-            wmWidth = WindowManager.LayoutParams.MATCH_PARENT;
-            wmHeight = WindowManager.LayoutParams.WRAP_CONTENT;
-        } else {
-            wmHeight = WindowManager.LayoutParams.MATCH_PARENT;
-            wmWidth = WindowManager.LayoutParams.WRAP_CONTENT;
-        }
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(displaymetrics);
         displaySize.set(displaymetrics.widthPixels, displaymetrics.heightPixels);
 
-        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                wmWidth,            //Width
-                wmHeight,            //Height
-                WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,//Overlay above everything
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL     //Don't react to touch events
-                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS //Allow to go anywhere on screen
-                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT);
-        //System.out.println(Utils.getOrientation((getResources())));
-        if (Utils.getOrientation(getResources()) == 1) {
-            params.gravity = Gravity.BOTTOM | Gravity.LEFT;
-            params.y = -Utils.getNavigationBarHeight(getResources()); //move into navbar
-        } else {
-            params.gravity = Gravity.RIGHT;
-            params.x = -Utils.getNavigationBarHeight(getResources());
-            params.y -= 0.5 * Utils.getStatusBarHeight(getResources());
-            int h = displaymetrics.heightPixels;
-            params.height = h + (Utils.getStatusBarHeight(getResources())/2);
-        }
-        windowManager.addView(relativeLayout, params);
+        if(Utils.getOrientation(getResources()) == 1)
+            windowManager.addView(relativeLayout, layoutParamsPortrait());
+        else
+            windowManager.addView(relativeLayout, layoutParamsLandscape());
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -92,7 +67,6 @@ public class ButtonLayer extends View {
 
         keyboardView = layoutInflater.inflate(R.layout.keyboardview, null, false);
         windowManager.addView(keyboardView, keyboardLayoutParams());
-
 
         this.keyboardView.getViewTreeObserver().addOnGlobalLayoutListener(new keyboardListener());
 
@@ -116,9 +90,9 @@ public class ButtonLayer extends View {
                 }
             }
         });
-
         windowManager.updateViewLayout(keyboardView, keyboardLayoutParams());
     }
+
 
     /**
      * Destroy the view
@@ -145,6 +119,39 @@ public class ButtonLayer extends View {
     private WindowManager.LayoutParams keyboardLayoutParams() {
         return new WindowManager.LayoutParams(1, -1, WindowManager.LayoutParams.TYPE_PHONE, 131096,
                 PixelFormat.TRANSLUCENT);
+    }
+
+    private WindowManager.LayoutParams layoutParamsLandscape() {
+       final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT, //Width
+                WindowManager.LayoutParams.MATCH_PARENT, //Height
+                WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,//Overlay above everything
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL     //Don't react to touch events
+                        | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS //Allow to go anywhere on screen
+                        | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+
+        params.gravity = Gravity.RIGHT;
+        params.x = -Utils.getNavigationBarHeight(getResources());
+        params.y -= 0.5 * Utils.getStatusBarHeight(getResources());
+        int h = displaySize.y;
+        params.height = h + (Utils.getStatusBarHeight(getResources())/2);
+        return params;
+    }
+
+    private WindowManager.LayoutParams layoutParamsPortrait() {
+        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT, //Width
+                WindowManager.LayoutParams.WRAP_CONTENT, //Height
+                WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,//Overlay above everything
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL     //Don't react to touch events
+                        | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS //Allow to go anywhere on screen
+                        | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+
+        params.gravity = Gravity.BOTTOM | Gravity.LEFT;
+        params.y = -Utils.getNavigationBarHeight(getResources()); //move into navbar
+        return params;
     }
 
     /**
