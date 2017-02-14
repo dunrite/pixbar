@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.SwitchCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +23,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import android.widget.Switch;
 
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.dunrite.pixbar.NavbarService;
@@ -39,7 +39,7 @@ import static android.view.View.GONE;
  */
 public class MainActivity extends AppCompatActivity implements ColorChooserDialog.ColorCallback {
     //Service toggles
-    @BindView(R.id.serviceToggle) Switch serviceToggle;
+    @BindView(R.id.serviceToggle) SwitchCompat serviceToggle;
     @BindView(R.id.runOnBootCheck) CheckBox runOnBootCheck;
     @BindView(R.id.runOnBoot) LinearLayout runOnBootContainer;
 

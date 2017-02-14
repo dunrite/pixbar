@@ -3,4 +3,5 @@
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#000</color>
     <color name="colorAccent">#4586ee</color>
+    <color name="enable_thumb_green">#ffffff</color>
 </resources>
