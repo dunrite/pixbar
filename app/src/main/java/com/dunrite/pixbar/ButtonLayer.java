@@ -12,6 +12,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.dunrite.pixbar.Utility.Utils;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -41,8 +43,28 @@ public class ButtonLayer extends View {
 
         keyboardView = new View(this.context);
         relativeLayout = new RelativeLayout(this.context);
-
         initWindowManager();
+    }
+
+    private void setupStyle() {
+        int padding = 0;
+        switch (Utils.getStyle(context)) {
+            case 0: //Small ring
+                padding = (int)Utils.convertDpToPx(context, 14);
+                homeButton.setImageResource(R.drawable.home);
+                break;
+            case 1: //Big ring
+                padding = (int)Utils.convertDpToPx(context, 10);
+                homeButton.setImageResource(R.drawable.home_big_ring);
+                break;
+            case 2: //Fill
+                padding = (int)Utils.convertDpToPx(context, 10);
+                homeButton.setImageResource(R.drawable.home);
+                break;
+            default:
+                break;
+        }
+        homeButton.setPadding(padding,padding,padding,padding);
     }
 
     /**
@@ -71,6 +93,7 @@ public class ButtonLayer extends View {
         this.keyboardView.getViewTreeObserver().addOnGlobalLayoutListener(new keyboardListener());
 
         ButterKnife.bind(this, relativeLayout);
+        setupStyle();
 
         Utils.setSpacing(getContext(), Utils.getSpacing(getContext()), homeButton, Utils.getOrientation(getResources()));
         //Scale should be automatically handled now

@@ -17,17 +17,20 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.dunrite.pixbar.NavbarService;
 import com.dunrite.pixbar.R;
-import com.dunrite.pixbar.Utils;
+import com.dunrite.pixbar.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
     @BindView(R.id.runOnBoot) LinearLayout runOnBootContainer;
 
     //Seekbars
-    @BindView(R.id.scaleBar) SeekBar scaleBar;
     @BindView(R.id.spacingBar) SeekBar spacingBar;
 
     //Preview button images
@@ -55,8 +57,6 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
 
     //Guides
     @BindView(R.id.showGuideCheck) CheckBox showGuideCheck;
-    @BindView(R.id.homeLeftGuide) ImageView  homeLeftGuide;
-    @BindView(R.id.homeRightGuide) ImageView  homeRightGuide;
     @BindView(R.id.backLeftGuide) ImageView  backLeftGuide;
     @BindView(R.id.backRightGuide) ImageView  backRightGuide;
     @BindView(R.id.recentsLeftGuide) ImageView  recentsLeftGuide;
@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
 
     //color chooser
     @BindView(R.id.colorChooser) Button colorChooser;
+
+    //Style chooser
+    @BindView(R.id.styleSpinner) Spinner styleSpinner;
 
     public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
 
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        guides = new ImageView[]{homeLeftGuide, homeRightGuide, backLeftGuide, backRightGuide,
+        guides = new ImageView[]{backLeftGuide, backRightGuide,
                 recentsLeftGuide, recentsRightGuide};
         activity = this;
         initialize();
@@ -99,6 +102,11 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
         updateColor();
         applyButton.setEnabled(Utils.isEnabled(this));
         runOnBootCheck.setChecked(Utils.isEnabledOnBoot(this));
+
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
+                R.array.style_array, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        styleSpinner.setAdapter(spinnerAdapter);
 
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,23 +139,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
                 Utils.saveValue(activity, "spacing", seekBar.getProgress());
             }
         });
-        scaleBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //Utils.setScale(getApplicationContext(), progress, backButton, homeButton, recentsButton, 1);
-                resetGuides();
-            }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                Utils.saveValue(activity, "scale", seekBar.getProgress());
-            }
-        });
         serviceToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -185,9 +177,39 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
             }
         });
 
+        styleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Utils.saveValue(activity, "style", position);
+                int padding = 0;
+                switch (position) {
+                    case 0: //Small ring
+                        padding = (int)Utils.convertDpToPx(activity, 14);
+                        homeButton.setImageResource(R.drawable.home);
+                        break;
+                    case 1: //Big ring
+                        padding = (int)Utils.convertDpToPx(activity, 10);
+                        homeButton.setImageResource(R.drawable.home_big_ring);
+                        break;
+                    case 2: //Fill
+                        padding = (int)Utils.convertDpToPx(activity, 10);
+                        homeButton.setImageResource(R.drawable.home);
+                        break;
+                    default:
+                        break;
+                }
+                homeButton.setPadding(padding,padding,padding,padding);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         serviceToggle.setChecked(Utils.isEnabled(activity));
         spacingBar.setProgress(Utils.getSpacing(activity));
-        scaleBar.setProgress(Utils.getScale(activity));
+        styleSpinner.setSelection(Utils.getStyle(activity));
         //showGuideCheck.setChecked(Utils.showGuides(this));
     }
 
@@ -262,9 +284,6 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
      * Show guide lines that help with placement
      */
     private void showGuides() {
-        homeLeftGuide.setVisibility(View.VISIBLE);
-        homeRightGuide.setVisibility(View.VISIBLE);
-
         backLeftGuide.setVisibility(View.VISIBLE);
         backRightGuide.setVisibility(View.VISIBLE);
 
@@ -278,9 +297,6 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
      * Hide guide lines that help with placement
      */
     private void hideGuides() {
-        homeLeftGuide.setVisibility(GONE);
-        homeRightGuide.setVisibility(GONE);
-
         backLeftGuide.setVisibility(GONE);
         backRightGuide.setVisibility(GONE);
 
@@ -293,10 +309,6 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
      * Reset the position of the guide lines
      */
     private void resetGuides() {
-        //homeLeftGuide.setX(homeButton.getX() + ((float) Utils.convertDpToPx(getApplicationContext(), 16)));
-        homeLeftGuide.setX((homeButton.getX() + homeButton.getWidth()/2) - (float) Utils.convertDpToPx(getApplicationContext(), 16)/2);
-        homeRightGuide.setX((homeButton.getX() + homeButton.getWidth()/2) + (float) Utils.convertDpToPx(getApplicationContext(), 16)/2);
-
         backLeftGuide.setX((backButton.getX() + backButton.getWidth()/2)- (float) Utils.convertDpToPx(getApplicationContext(), 16)/2);
         backRightGuide.setX((backButton.getX() + backButton.getWidth()/2) + (float) Utils.convertDpToPx(getApplicationContext(), 16)/2);
 

@@ -15,4 +15,11 @@
     <string name="libraries">AppIntro by Paolo Rotolo\nMaterial Dialogs by Aiden Follestad\nButterknife by Jake Wharton</string>
     <string name="libraries_used">libraries used</string>
     <string name="run_on_boot">Run on Boot</string>
+    <string name="styleLabel">Style</string>
+
+    <string-array name="style_array">
+        <item>Small Ring</item>
+        <item>Big Ring</item>
+        <item>Fill</item>
+    </string-array>
 </resources>

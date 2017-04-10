@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.dunrite.pixbar.Utility.Utils;
+
 /**
  * Broadcast Reciever that runs on boot
  */

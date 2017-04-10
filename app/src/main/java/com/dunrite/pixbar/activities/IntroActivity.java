@@ -10,7 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 import com.dunrite.pixbar.R;
-import com.dunrite.pixbar.Utils;
+import com.dunrite.pixbar.Utility.Utils;
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 

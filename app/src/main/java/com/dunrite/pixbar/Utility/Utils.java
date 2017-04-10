@@ -1,4 +1,4 @@
-package com.dunrite.pixbar;
+package com.dunrite.pixbar.Utility;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,13 +24,13 @@ public class Utils {
     private Utils() {}
 
     /**
-     * Gets scale for the buttons
+     * Gets style of the buttons
      * @param c context
      * @return scale in px
      */
-    public static int getScale(Context c) {
-        SharedPreferences sharedPref = c.getSharedPreferences("scale", Context.MODE_PRIVATE);
-        return sharedPref.getInt("scale", 50);
+    public static int getStyle(Context c) {
+        SharedPreferences sharedPref = c.getSharedPreferences("style", Context.MODE_PRIVATE);
+        return sharedPref.getInt("style", 0);
     }
 
     /**

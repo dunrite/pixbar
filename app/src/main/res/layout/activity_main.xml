@@ -30,22 +30,6 @@
         android:layout_width="1dp"
         android:layout_height="420dp"
         app:srcCompat="@color/colorAccent"
-        android:id="@+id/homeLeftGuide"
-        android:layout_alignParentBottom="true"
-        android:translationZ="3dp"
-        android:visibility="invisible"/>
-    <ImageView
-        android:layout_width="1dp"
-        android:layout_height="420dp"
-        app:srcCompat="@color/colorAccent"
-        android:id="@+id/homeRightGuide"
-        android:layout_alignParentBottom="true"
-        android:translationZ="3dp"
-        android:visibility="invisible"/>
-    <ImageView
-        android:layout_width="1dp"
-        android:layout_height="420dp"
-        app:srcCompat="@color/colorAccent"
         android:id="@+id/recentsLeftGuide"
         android:layout_alignParentBottom="true"
         android:translationZ="3dp"
@@ -101,9 +85,8 @@
                     android:layout_height="wrap_content"
                     android:checked="false"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-                    app:buttonTint="@color/colorPrimary"
-                    />
-        </LinearLayout>
+                    android:buttonTint="@color/colorPrimary" />
+            </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
@@ -119,28 +102,27 @@
             android:layout_height="match_parent"
             android:padding="16dp">
             <!--DON'T SHOW THIS ANYMORE-->
-            <TextView
-                android:text="@string/scale"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:id="@+id/scaleLabel"
-                android:visibility="gone"/>
+            <!--<TextView-->
+                <!--android:text="@string/scale"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="8dp"-->
+                <!--android:id="@+id/scaleLabel"-->
+                <!--android:visibility="gone"/>-->
 
-            <SeekBar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/scaleBar"
-                android:layout_below="@+id/scaleLabel"
-                android:progress="49"
-                android:visibility="gone"/>
-            <!--END DON'T SHOW            -->
+            <!--<SeekBar-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/scaleBar"-->
+                <!--android:layout_below="@+id/scaleLabel"-->
+                <!--android:progress="49"-->
+                <!--android:visibility="gone"/>-->
+            <!--END DON'T SHOW-->
 
             <TextView
                 android:text="@string/spacing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/scaleBar"
                 android:layout_marginBottom="8dp"
                 android:id="@+id/spacingLabel"/>
 
@@ -155,7 +137,7 @@
 
             <TextView
                 android:text="@string/color"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/spacingBar"
                 android:layout_marginTop="16dp"
@@ -170,6 +152,23 @@
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:text="#000000"
                 android:textAppearance="@android:style/TextAppearance.Material.Widget.Button" />
+
+            <TextView
+                android:text="@string/styleLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/colorChooser"
+                android:layout_below="@id/spacingBar"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/styleLabel"/>
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/styleSpinner"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/colorChooser"
+                android:layout_below="@id/styleLabel"/>
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
