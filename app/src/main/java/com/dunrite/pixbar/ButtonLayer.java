@@ -104,7 +104,7 @@ public class ButtonLayer extends View {
         relativeLayout.setOnSystemUiVisibilityChangeListener(new OnSystemUiVisibilityChangeListener() {
             @Override
             public void onSystemUiVisibilityChange(int visibility) {
-                if((visibility & SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                if((visibility & SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0) {
                     //System.out.println("System Bars Visible");
                     relativeLayout.setVisibility(VISIBLE);
                 } else {
@@ -113,6 +113,10 @@ public class ButtonLayer extends View {
                 }
             }
         });
+
+        if((getSystemUiVisibility() & SYSTEM_UI_FLAG_HIDE_NAVIGATION) != 0) {
+            relativeLayout.setVisibility(INVISIBLE);
+        }
         windowManager.updateViewLayout(keyboardView, keyboardLayoutParams());
     }
 
