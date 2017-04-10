@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
                         homeButton.setImageResource(R.drawable.home);
                         break;
                     case 1: //Big ring
-                        padding = (int)Utils.convertDpToPx(activity, 10);
+                        padding = (int)Utils.convertDpToPx(activity, 9);
                         homeButton.setImageResource(R.drawable.home_big_ring);
                         break;
                     case 2: //Fill

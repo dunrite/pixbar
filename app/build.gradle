@@ -7,8 +7,8 @@ android {
         applicationId "com.dunrite.pixbar"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 1001000
-        versionName "1.1.0"
+        versionCode 1001001
+        versionName "1.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -54,7 +54,7 @@ public class ButtonLayer extends View {
                 homeButton.setImageResource(R.drawable.home);
                 break;
             case 1: //Big ring
-                padding = (int)Utils.convertDpToPx(context, 10);
+                padding = (int)Utils.convertDpToPx(context, 9);
                 homeButton.setImageResource(R.drawable.home_big_ring);
                 break;
             case 2: //Fill
