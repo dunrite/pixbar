@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.ColorInt;
-import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -225,9 +224,12 @@ public class Utils {
      * @param dp value in dp
      * @return value in pixels
      */
-    public static double convertDpToPx(Context c, double dp) {
-        DisplayMetrics displayMetrics = c.getResources().getDisplayMetrics();
-        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+    public static int convertDpToPx(Context c, double dp) {
+        //DisplayMetrics displayMetrics = c.getResources().getDisplayMetrics();
+        //return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        final float scale = c.getResources().getDisplayMetrics().density;
+        int padding_in_px = (int) (dp * scale + 0.5f);
+        return padding_in_px;
     }
 
     /**
