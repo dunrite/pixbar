@@ -20,3 +20,9 @@ Screenshot
 Here is what the app currently looks like.
 
 <img src="http://i.imgur.com/4Vf8fPG.png" width="400"/>
+
+Libraries Used
+------------
+* [AppIntro by Paolo Rotolo](https://github.com/apl-devs/AppIntro)
+* [Butterknife by Jake Wharton](https://github.com/JakeWharton/butterknife)
+* [Material Dialogs by Aidan Follestad](https://github.com/afollestad/material-dialogs)
