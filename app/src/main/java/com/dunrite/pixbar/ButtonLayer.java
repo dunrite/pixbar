@@ -3,6 +3,7 @@ package com.dunrite.pixbar;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.dunrite.pixbar.Utility.Utils;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,21 +47,39 @@ public class ButtonLayer extends View {
         keyboardView = new View(this.context);
         relativeLayout = new RelativeLayout(this.context);
         initWindowManager();
+        adjustIfLG();
+    }
+
+    private void adjustIfLG() {
+        if (Objects.equals(Build.MANUFACTURER, "LGE")) {
+            int padding = Utils.convertDpToPx(context, 11);
+            backButton.setPadding(padding, padding, padding, padding);
+            recentsButton.setPadding(padding, padding, padding, padding);
+        }
     }
 
     private void setupStyle() {
         int padding = 0;
         switch (Utils.getStyle(context)) {
             case 0: //Small ring
-                padding = Utils.convertDpToPx(context, 16);
+                if (!Objects.equals(Build.MANUFACTURER, "LGE"))
+                    padding = Utils.convertDpToPx(context, 16);
+                else
+                    padding = Utils.convertDpToPx(context, 12);
                 homeButton.setImageResource(R.drawable.home);
                 break;
             case 1: //Big ring
-                padding = Utils.convertDpToPx(context, 11);
+                if (!Objects.equals(Build.MANUFACTURER, "LGE"))
+                    padding = Utils.convertDpToPx(context, 11);
+                else
+                    padding = Utils.convertDpToPx(context, 5);
                 homeButton.setImageResource(R.drawable.home_big_ring);
                 break;
             case 2: //Fill
-                padding = Utils.convertDpToPx(context, 14);
+                if (!Objects.equals(Build.MANUFACTURER, "LGE"))
+                    padding = Utils.convertDpToPx(context, 14);
+                else
+                    padding = Utils.convertDpToPx(context, 7);
                 homeButton.setImageResource(R.drawable.home);
                 break;
             default:
@@ -159,10 +180,11 @@ public class ButtonLayer extends View {
                 PixelFormat.TRANSLUCENT);
 
         params.gravity = Gravity.RIGHT;
-        params.x = -Utils.getNavigationBarHeight(getResources());
+        params.x = -Utils.getNavigationBarHeight(getContext(), true);
         params.y -= 0.5 * Utils.getStatusBarHeight(getResources());
         int h = displaySize.y;
         params.height = h + (Utils.getStatusBarHeight(getResources())/2);
+        params.width = Utils.getNavigationBarHeight(getContext(), true);
         return params;
     }
 
@@ -177,7 +199,8 @@ public class ButtonLayer extends View {
                 PixelFormat.TRANSLUCENT);
 
         params.gravity = Gravity.BOTTOM | Gravity.LEFT;
-        params.y = -Utils.getNavigationBarHeight(getResources()); //move into navbar
+        params.height = Utils.getNavigationBarHeight(getContext(), false);
+        params.y = -Utils.getNavigationBarHeight(getContext(), false); //move into navbar
         return params;
     }
 
@@ -189,7 +212,7 @@ public class ButtonLayer extends View {
 
         @Override
         public void onGlobalLayout() {
-            int navBarH = Utils.getNavigationBarHeight(getResources());
+            int navBarH = Utils.getNavigationBarHeight(getContext(), false);
             int statusBarH = Utils.getStatusBarHeight(getResources());
 
             ButtonLayer.this.keyboardOpen = ButtonLayer.this.keyboardView.getBottom() <

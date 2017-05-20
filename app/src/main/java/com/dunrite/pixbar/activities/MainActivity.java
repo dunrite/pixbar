@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 Utils.saveValue(activity, "spacing", seekBar.getProgress());
+
             }
         });
 
@@ -330,6 +331,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
                 .doneButton(R.string.md_done_label)  // changes label of the done button
                 .cancelButton(R.string.md_cancel_label)  // changes label of the cancel button
                 .backButton(R.string.md_back_label)  // changes label of the back button
+                .allowUserColorInputAlpha(false) // don't allow transparency
                 .dynamicButtonColor(true)  // defaults to true, false will disable changing action buttons' color to currently selected color
                 .show();
     }
@@ -365,7 +367,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
     private void updateColorChooserLook(@ColorInt int color) {
         String hex = String.format("#%06X", (0xFFFFFF & color));
         //System.out.println("HEX IS " + hex);
-        if (hex.startsWith("#000") || hex.startsWith("#FFF")) {
+        if (hex.startsWith("#FFF")) {
             colorChooser.setTextColor(Color.BLACK);
         } else {
             colorChooser.setTextColor(color);

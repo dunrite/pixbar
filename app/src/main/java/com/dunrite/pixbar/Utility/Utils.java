@@ -4,11 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.ColorInt;
+import android.view.Display;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Utility class for various common methods
@@ -49,7 +54,7 @@ public class Utils {
      */
     public static int getColor(Context c) {
         SharedPreferences sharedPref = c.getSharedPreferences("color", Context.MODE_PRIVATE);
-        return sharedPref.getInt("color", 0x00000);
+        return sharedPref.getInt("color", 0xFFFFF);
     }
 
     /**
@@ -189,7 +194,7 @@ public class Utils {
     }
 
     public static void setScale(Context c, double scale, ImageView image, int orientation) {
-        double realScale = convertDpToPx(c, NAVBAR_HEIGHT_IN_DP * (scale/100));
+        double realScale = convertDpToPx(c, getNavigationBarHeight(c, false) * (scale/100));
         if (orientation == 1)
             image.getLayoutParams().height = (int) realScale;
         else
@@ -244,18 +249,88 @@ public class Utils {
         return true;
     }
 
+    /**
+     * Gets current screen orientation
+     * @param resources
+     * @return
+     */
     public static int getOrientation(Resources resources) {
         return resources.getConfiguration().orientation;
     }
 
-    public static int getNavigationBarHeight(Resources resources) {
-        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId <= 0) {
-            return 0;
-        }
-        return resources.getDimensionPixelSize(resourceId);
+    /**
+     * returns the height of the navbar for placement of the buttons
+     * @param c current contect
+     * @param isLandscape is the screen in landscape mode
+     * @return height
+     */
+    public static int getNavigationBarHeight(Context c, boolean isLandscape) {
+        return isLandscape ? getNavigationBarSize(c).x : getNavigationBarSize(c).y;
     }
 
+    /**
+     * Returns the total size of the navigation bar using a method that works on all devices
+     * @param context current context
+     * @return navbar size in height and width
+     */
+    private static Point getNavigationBarSize(Context context) {
+        Point appUsableSize = getAppUsableScreenSize(context);
+        Point realScreenSize = getRealScreenSize(context);
+
+        // navigation bar on the right
+        if (appUsableSize.x < realScreenSize.x) {
+            return new Point(realScreenSize.x - appUsableSize.x, appUsableSize.y);
+        }
+
+        // navigation bar at the bottom
+        if (appUsableSize.y < realScreenSize.y) {
+            return new Point(appUsableSize.x, realScreenSize.y - appUsableSize.y);
+        }
+
+        // navigation bar is not present
+        return new Point();
+    }
+
+    /**
+     * Get the usable screen area to help determine the navbar size
+     * @param context current context
+     * @return
+     */
+    private static Point getAppUsableScreenSize(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size;
+    }
+
+    /**
+     * Gets the actual size of the device's screen
+     * @param context current context
+     * @return
+     */
+    private static Point getRealScreenSize(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point size = new Point();
+
+        if (Build.VERSION.SDK_INT >= 17) {
+            display.getRealSize(size);
+        } else if (Build.VERSION.SDK_INT >= 14) {
+            try {
+                size.x = (Integer) Display.class.getMethod("getRawWidth").invoke(display);
+                size.y = (Integer) Display.class.getMethod("getRawHeight").invoke(display);
+            } catch (IllegalAccessException e) {} catch (InvocationTargetException e) {} catch (NoSuchMethodException e) {}
+        }
+
+        return size;
+    }
+
+    /**
+     * returns the height of the statusbar
+     * @param resources
+     * @return height in px
+     */
     public static int getStatusBarHeight(Resources resources) {
         int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
