@@ -51,32 +51,38 @@ public class ButtonLayer extends View {
     }
 
     private void adjustIfLG() {
-        if (Objects.equals(Build.MANUFACTURER, "LGE")) {
+        if (Objects.equals(Build.MANUFACTURER, "LGE") && !isLGNexus()) {
             int padding = Utils.convertDpToPx(context, 11);
             backButton.setPadding(padding, padding, padding, padding);
             recentsButton.setPadding(padding, padding, padding, padding);
         }
     }
 
+    private boolean isLGNexus() {
+        return Objects.equals(Build.DEVICE, "mako") ||
+                Objects.equals(Build.DEVICE, "hammerhead") ||
+                Objects.equals(Build.DEVICE, "bullhead");
+    }
+
     private void setupStyle() {
         int padding = 0;
         switch (Utils.getStyle(context)) {
             case 0: //Small ring
-                if (!Objects.equals(Build.MANUFACTURER, "LGE"))
+                if (isLGNexus() || !Objects.equals(Build.MANUFACTURER, "LGE"))
                     padding = Utils.convertDpToPx(context, 16);
                 else
                     padding = Utils.convertDpToPx(context, 12);
                 homeButton.setImageResource(R.drawable.home);
                 break;
             case 1: //Big ring
-                if (!Objects.equals(Build.MANUFACTURER, "LGE"))
+                if (isLGNexus() || !Objects.equals(Build.MANUFACTURER, "LGE"))
                     padding = Utils.convertDpToPx(context, 11);
                 else
                     padding = Utils.convertDpToPx(context, 5);
                 homeButton.setImageResource(R.drawable.home_big_ring);
                 break;
             case 2: //Fill
-                if (!Objects.equals(Build.MANUFACTURER, "LGE"))
+                if (isLGNexus() || !Objects.equals(Build.MANUFACTURER, "LGE"))
                     padding = Utils.convertDpToPx(context, 14);
                 else
                     padding = Utils.convertDpToPx(context, 7);

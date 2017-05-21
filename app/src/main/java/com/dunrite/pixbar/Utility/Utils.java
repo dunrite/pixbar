@@ -19,7 +19,6 @@ import java.lang.reflect.InvocationTargetException;
  * Utility class for various common methods
  */
 public class Utils {
-    private static final int NAVBAR_HEIGHT_IN_DP = 48;
     private static final int DEFAULT_SPACING = 125;
 
     /**
@@ -53,8 +52,8 @@ public class Utils {
      * @return color of buttons
      */
     public static int getColor(Context c) {
-        SharedPreferences sharedPref = c.getSharedPreferences("color", Context.MODE_PRIVATE);
-        return sharedPref.getInt("color", 0xFFFFF);
+        SharedPreferences sharedPref = c.getSharedPreferences("tint", Context.MODE_PRIVATE);
+        return sharedPref.getInt("tint", 0xFFFFFF);
     }
 
     /**

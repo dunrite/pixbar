@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
      */
     @Override
     public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int selectedColor) {
-        Utils.saveValue(this, "color", selectedColor);
+        Utils.saveValue(this, "tint", selectedColor);
         updateColor();
     }
 
@@ -367,12 +367,13 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
     private void updateColorChooserLook(@ColorInt int color) {
         String hex = String.format("#%06X", (0xFFFFFF & color));
         //System.out.println("HEX IS " + hex);
-        if (hex.startsWith("#FFF")) {
+        colorChooser.setText(hex);
+        if (hex.startsWith("#FFFFFF")) {
             colorChooser.setTextColor(Color.BLACK);
         } else {
             colorChooser.setTextColor(color);
         }
-        colorChooser.setText(hex);
+
     }
 }
 
