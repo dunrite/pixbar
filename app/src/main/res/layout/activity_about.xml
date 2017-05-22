@@ -93,13 +93,40 @@
         </android.support.v7.widget.CardView>
 
         <TextView
+            android:id="@+id/testerstext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/testers"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:layout_below="@id/dev_card"
+            android:paddingBottom="8dp"
+            android:paddingTop="16dp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/testers_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/testerstext"
+            app:cardBackgroundColor="@color/cardview_light_background">
+
+            <TextView
+                android:id="@+id/testers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/testersNames"
+                android:textSize="@dimen/abc_text_size_title_material" />
+        </android.support.v7.widget.CardView>
+
+        <TextView
             android:id="@+id/lib_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/libraries_used"
             android:textAllCaps="true"
             android:textColor="@color/colorAccent"
-            android:layout_below="@id/dev_card"
+            android:layout_below="@id/testers_card"
             android:paddingBottom="8dp"
             android:paddingTop="16dp" />
 
@@ -118,5 +145,33 @@
                 android:text="@string/libraries"
                 android:textSize="@dimen/abc_text_size_title_material" />
         </android.support.v7.widget.CardView>
+
+
+        <!--<TextView-->
+            <!--android:id="@+id/debug_text"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="device parameters"-->
+            <!--android:textAllCaps="true"-->
+            <!--android:textColor="@color/colorAccent"-->
+            <!--android:layout_below="@id/lib_card"-->
+            <!--android:paddingBottom="8dp"-->
+            <!--android:paddingTop="16dp" />-->
+
+        <!--<android.support.v7.widget.CardView-->
+            <!--android:id="@+id/debug_card"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/debug_text"-->
+            <!--app:cardBackgroundColor="@color/cardview_light_background">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/debugtext"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="16dp"-->
+                <!--android:text=""-->
+                <!--android:textSize="@dimen/abc_text_size_title_material" />-->
+        <!--</android.support.v7.widget.CardView>-->
     </RelativeLayout>
 </ScrollView>

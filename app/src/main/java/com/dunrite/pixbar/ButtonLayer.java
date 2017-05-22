@@ -51,38 +51,46 @@ public class ButtonLayer extends View {
     }
 
     private void adjustIfLG() {
-        if (Objects.equals(Build.MANUFACTURER, "LGE") && !isLGNexus()) {
+        if (Objects.equals(Build.MANUFACTURER, "LGE") && !isLGNexus() && !isLGG6()) {
             int padding = Utils.convertDpToPx(context, 11);
             backButton.setPadding(padding, padding, padding, padding);
             recentsButton.setPadding(padding, padding, padding, padding);
         }
     }
 
+    /**
+     * Checks if device is an LG Nexus to ignore special sizing for non-nexus LG devices
+     * @return is LG Nexus
+     */
     private boolean isLGNexus() {
         return Objects.equals(Build.DEVICE, "mako") ||
                 Objects.equals(Build.DEVICE, "hammerhead") ||
                 Objects.equals(Build.DEVICE, "bullhead");
     }
 
+    private boolean isLGG6() {
+        return Objects.equals(Build.DEVICE, "lucye");
+    }
+
     private void setupStyle() {
         int padding = 0;
         switch (Utils.getStyle(context)) {
             case 0: //Small ring
-                if (isLGNexus() || !Objects.equals(Build.MANUFACTURER, "LGE"))
+                if (isLGG6() || isLGNexus() || !Objects.equals(Build.MANUFACTURER, "LGE"))
                     padding = Utils.convertDpToPx(context, 16);
                 else
                     padding = Utils.convertDpToPx(context, 12);
                 homeButton.setImageResource(R.drawable.home);
                 break;
             case 1: //Big ring
-                if (isLGNexus() || !Objects.equals(Build.MANUFACTURER, "LGE"))
+                if (isLGG6() || isLGNexus() || !Objects.equals(Build.MANUFACTURER, "LGE"))
                     padding = Utils.convertDpToPx(context, 11);
                 else
                     padding = Utils.convertDpToPx(context, 5);
                 homeButton.setImageResource(R.drawable.home_big_ring);
                 break;
             case 2: //Fill
-                if (isLGNexus() || !Objects.equals(Build.MANUFACTURER, "LGE"))
+                if (isLGG6() || isLGNexus() || !Objects.equals(Build.MANUFACTURER, "LGE"))
                     padding = Utils.convertDpToPx(context, 14);
                 else
                     padding = Utils.convertDpToPx(context, 7);
@@ -105,14 +113,15 @@ public class ButtonLayer extends View {
         windowManager.getDefaultDisplay().getMetrics(displaymetrics);
         displaySize.set(displaymetrics.widthPixels, displaymetrics.heightPixels);
 
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater.inflate(R.layout.buttons, relativeLayout);
+
         if(Utils.getOrientation(getResources()) == 1)
             windowManager.addView(relativeLayout, layoutParamsPortrait());
         else
             windowManager.addView(relativeLayout, layoutParamsLandscape());
 
-        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        layoutInflater.inflate(R.layout.buttons, relativeLayout);
 
         keyboardView = layoutInflater.inflate(R.layout.keyboardview, null, false);
         windowManager.addView(keyboardView, keyboardLayoutParams());
@@ -175,6 +184,10 @@ public class ButtonLayer extends View {
                 PixelFormat.TRANSLUCENT);
     }
 
+    /**
+     * Layout Paramters when in landscape orientation
+     * @return
+     */
     private WindowManager.LayoutParams layoutParamsLandscape() {
        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT, //Width
@@ -194,10 +207,14 @@ public class ButtonLayer extends View {
         return params;
     }
 
+    /**
+     * Layout Parameters when in portrait orientation
+     * @return
+     */
     private WindowManager.LayoutParams layoutParamsPortrait() {
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT, //Width
-                WindowManager.LayoutParams.WRAP_CONTENT, //Height
+                Utils.getNavigationBarHeight(getContext(), false), //Height
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,//Overlay above everything
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL     //Don't react to touch events
                         | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS //Allow to go anywhere on screen
@@ -205,8 +222,7 @@ public class ButtonLayer extends View {
                 PixelFormat.TRANSLUCENT);
 
         params.gravity = Gravity.BOTTOM | Gravity.LEFT;
-        params.height = Utils.getNavigationBarHeight(getContext(), false);
-        params.y = -Utils.getNavigationBarHeight(getContext(), false); //move into navbar
+        params.y = -params.height; //move into navbar
         return params;
     }
 

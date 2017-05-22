@@ -14,11 +14,13 @@ import com.dunrite.pixbar.R;
  * About activity
  */
 public class AboutActivity extends AppCompatActivity {
+    //@BindView(R.id.debugtext) TextView debugText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+      //  ButterKnife.bind(this);
         getSupportActionBar().setTitle("About");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String versionName = "";
@@ -32,6 +34,13 @@ public class AboutActivity extends AppCompatActivity {
         }
         TextView tv = (TextView) findViewById(R.id.versionNum);
         tv.setText(versionName);
+
+//        debugText.setText("DEVICE: " + Build.DEVICE +
+//                          "\nMANUFACTURER: " + Build.MANUFACTURER +
+//                          "\nBOARD: " + Build.BOARD +
+//                          "\nBRAND: " + Build.BRAND +
+//                          "\nMODEL: " + Build.MODEL +
+//                          "\nPRODUCT: " + Build.PRODUCT);
     }
 
     @Override
