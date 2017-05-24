@@ -31,8 +31,8 @@
 
                 <ImageView
                     android:id="@+id/logo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_margin="8dp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/ic_launcher" />
@@ -41,7 +41,7 @@
                     android:id="@+id/appTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="32dp"
+                    android:paddingTop="8dp"
                     android:layout_centerHorizontal="true"
                     android:text="@string/app_name"
                     android:textSize="@dimen/abc_text_size_headline_material" />
@@ -57,7 +57,7 @@
                 <ImageView
                     android:id="@+id/a_dunrite_app"
                     android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_height="50dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:paddingRight="16dp"
@@ -144,6 +144,44 @@
                 android:layout_margin="16dp"
                 android:text="@string/libraries"
                 android:textSize="@dimen/abc_text_size_title_material" />
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/issue_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/report_issues_feature_requests"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:layout_below="@id/lib_card"
+            android:paddingBottom="8dp"
+            android:paddingTop="16dp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/issue_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/issue_text"
+            app:cardBackgroundColor="@color/cardview_light_background">
+
+            <Button
+                android:id="@+id/emailButton"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:text="@string/email"
+                android:drawableStart="@drawable/ic_email_24dp" />
+
+            <Button
+                android:id="@+id/githubButton"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/github"
+                android:drawablePadding="8dp"
+                android:layout_gravity="right"
+                android:text="@string/issue_tracker"/>
         </android.support.v7.widget.CardView>
 
 
