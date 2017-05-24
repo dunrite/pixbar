@@ -170,6 +170,23 @@
                 android:layout_toEndOf="@id/colorChooser"
                 android:layout_below="@id/styleLabel"/>
 
+            <TextView
+                android:id="@+id/buttonOrderText"
+                android:text="@string/button_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/styleSpinner"
+                android:layout_below="@id/spacingBar"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp" />
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/orderSpinner"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/styleSpinner"
+                android:layout_below="@id/styleLabel"/>
+
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

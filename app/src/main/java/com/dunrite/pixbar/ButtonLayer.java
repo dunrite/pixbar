@@ -48,8 +48,12 @@ public class ButtonLayer extends View {
         relativeLayout = new RelativeLayout(this.context);
         initWindowManager();
         adjustIfLG();
+        setupOrder();
     }
 
+    /**
+     * Adjusts padding for non-nexus/G6 LG devices
+     */
     private void adjustIfLG() {
         if (Objects.equals(Build.MANUFACTURER, "LGE") && !isLGNexus() && !isLGG6()) {
             int padding = Utils.convertDpToPx(context, 11);
@@ -68,10 +72,17 @@ public class ButtonLayer extends View {
                 Objects.equals(Build.DEVICE, "bullhead");
     }
 
+    /**
+     * Is the device an LG G6?
+     * @return isG6
+     */
     private boolean isLGG6() {
         return Objects.equals(Build.DEVICE, "lucye");
     }
 
+    /**
+     * Sets the style of the home button according to user settings
+     */
     private void setupStyle() {
         int padding = 0;
         switch (Utils.getStyle(context)) {
@@ -103,8 +114,34 @@ public class ButtonLayer extends View {
     }
 
     /**
+     * Sets the order of the buttons according to settings
+     */
+    private void setupOrder(){
+        RelativeLayout.LayoutParams backParams = (RelativeLayout.LayoutParams)backButton.getLayoutParams();
+        RelativeLayout.LayoutParams recentsParams = (RelativeLayout.LayoutParams)recentsButton.getLayoutParams();
+        //Order is flipped
+        if (Utils.getOrder(getContext()) == 1) {
+            if (Utils.getOrientation(getResources()) == 1) { //not landscape
+                recentsParams.removeRule(RelativeLayout.END_OF);
+                recentsParams.addRule(RelativeLayout.START_OF, R.id.homeButton);
+
+                backParams.removeRule(RelativeLayout.START_OF);
+                backParams.addRule(RelativeLayout.END_OF, R.id.homeButton);
+            } else { //is Landscape
+                recentsParams.removeRule(RelativeLayout.ABOVE);
+                recentsParams.addRule(RelativeLayout.BELOW, R.id.homeButton);
+
+                backParams.removeRule(RelativeLayout.BELOW);
+                backParams.addRule(RelativeLayout.ABOVE, R.id.homeButton);
+            }
+            backButton.setLayoutParams(backParams);
+            recentsButton.setLayoutParams(recentsParams);
+        }
+
+    }
+
+    /**
      * Initialize the Window Manager
-     * TODO: THIS METHOD IS A MESS
      */
     private void initWindowManager() {
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -115,20 +152,19 @@ public class ButtonLayer extends View {
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         layoutInflater.inflate(R.layout.buttons, relativeLayout);
+        ButterKnife.bind(this, relativeLayout);
 
         if(Utils.getOrientation(getResources()) == 1)
             windowManager.addView(relativeLayout, layoutParamsPortrait());
         else
             windowManager.addView(relativeLayout, layoutParamsLandscape());
 
-
-
         keyboardView = layoutInflater.inflate(R.layout.keyboardview, null, false);
         windowManager.addView(keyboardView, keyboardLayoutParams());
 
         this.keyboardView.getViewTreeObserver().addOnGlobalLayoutListener(new keyboardListener());
 
-        ButterKnife.bind(this, relativeLayout);
+
         setupStyle();
 
         Utils.setSpacing(getContext(), Utils.getSpacing(getContext()), homeButton, Utils.getOrientation(getResources()));
@@ -153,6 +189,7 @@ public class ButtonLayer extends View {
         if((getSystemUiVisibility() & SYSTEM_UI_FLAG_HIDE_NAVIGATION) != 0) {
             relativeLayout.setVisibility(INVISIBLE);
         }
+
         windowManager.updateViewLayout(keyboardView, keyboardLayoutParams());
     }
 
@@ -204,6 +241,7 @@ public class ButtonLayer extends View {
         int h = displaySize.y;
         params.height = h + (Utils.getStatusBarHeight(getResources())/2);
         params.width = Utils.getNavigationBarHeight(getContext(), true);
+
         return params;
     }
 
@@ -223,6 +261,7 @@ public class ButtonLayer extends View {
 
         params.gravity = Gravity.BOTTOM | Gravity.LEFT;
         params.y = -params.height; //move into navbar
+
         return params;
     }
 

@@ -37,6 +37,16 @@ public class Utils {
     }
 
     /**
+     * Gets order of the buttons
+     * @param c context
+     * @return order of buttons
+     */
+    public static int getOrder(Context c) {
+        SharedPreferences sharedPref = c.getSharedPreferences("order", Context.MODE_PRIVATE);
+        return sharedPref.getInt("order", 0);
+    }
+
+    /**
      * Gets spacing for the buttons
      * @param c context
      * @return spacing in px
