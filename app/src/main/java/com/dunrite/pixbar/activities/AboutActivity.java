@@ -25,6 +25,7 @@ public class AboutActivity extends AppCompatActivity {
     //@BindView(R.id.debugtext) TextView debugText;
     @BindView(R.id.emailButton) Button emailButton;
     @BindView(R.id.githubButton) Button githubButton;
+    @BindView(R.id.versionNum) TextView versionNum;
 
 
     @Override
@@ -39,12 +40,11 @@ public class AboutActivity extends AppCompatActivity {
         //Inserts the correct version number of the app
         try {
             packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            versionName = packageInfo.versionName;
+            versionName = "v" + packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        TextView tv = (TextView) findViewById(R.id.versionNum);
-        tv.setText(versionName);
+        versionNum.setText(versionName);
 
 //        debugText.setText("DEVICE: " + Build.DEVICE +
 //                          "\nMANUFACTURER: " + Build.MANUFACTURER +
