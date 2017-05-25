@@ -48,7 +48,6 @@ public class ButtonLayer extends View {
         relativeLayout = new RelativeLayout(this.context);
         initWindowManager();
         adjustIfLG();
-        setupOrder();
     }
 
     /**
@@ -123,16 +122,16 @@ public class ButtonLayer extends View {
         if (Utils.getOrder(getContext()) == 1) {
             if (Utils.getOrientation(getResources()) == 1) { //not landscape
                 recentsParams.removeRule(RelativeLayout.END_OF);
-                recentsParams.addRule(RelativeLayout.START_OF, R.id.homeButton);
+                recentsParams.addRule(RelativeLayout.START_OF, R.id.homeButtonS);
 
                 backParams.removeRule(RelativeLayout.START_OF);
-                backParams.addRule(RelativeLayout.END_OF, R.id.homeButton);
+                backParams.addRule(RelativeLayout.END_OF, R.id.homeButtonS);
             } else { //is Landscape
                 recentsParams.removeRule(RelativeLayout.ABOVE);
-                recentsParams.addRule(RelativeLayout.BELOW, R.id.homeButton);
+                recentsParams.addRule(RelativeLayout.BELOW, R.id.homeButtonS);
 
                 backParams.removeRule(RelativeLayout.BELOW);
-                backParams.addRule(RelativeLayout.ABOVE, R.id.homeButton);
+                backParams.addRule(RelativeLayout.ABOVE, R.id.homeButtonS);
             }
             backButton.setLayoutParams(backParams);
             recentsButton.setLayoutParams(recentsParams);
@@ -164,8 +163,8 @@ public class ButtonLayer extends View {
 
         this.keyboardView.getViewTreeObserver().addOnGlobalLayoutListener(new keyboardListener());
 
-
         setupStyle();
+        setupOrder();
 
         Utils.setSpacing(getContext(), Utils.getSpacing(getContext()), homeButton, Utils.getOrientation(getResources()));
         //Scale should be automatically handled now
