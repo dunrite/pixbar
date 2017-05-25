@@ -24,6 +24,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
 
     //Style chooser
     @BindView(R.id.styleSpinner) Spinner styleSpinner;
+    @BindView(R.id.orderSpinner) Spinner orderSpinner;
 
     public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
 
@@ -107,6 +109,11 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
                 R.array.style_array, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         styleSpinner.setAdapter(spinnerAdapter);
+
+        ArrayAdapter<CharSequence> spinnerAdapter2 = ArrayAdapter.createFromResource(this,
+                R.array.order_array, android.R.layout.simple_spinner_item);
+        spinnerAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        orderSpinner.setAdapter(spinnerAdapter2);
 
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,9 +215,45 @@ public class MainActivity extends AppCompatActivity implements ColorChooserDialo
             }
         });
 
+        orderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Utils.saveValue(activity, "order", position);
+                RelativeLayout.LayoutParams backParams = (RelativeLayout.LayoutParams)backButton.getLayoutParams();
+                RelativeLayout.LayoutParams recentsParams = (RelativeLayout.LayoutParams)recentsButton.getLayoutParams();
+
+                switch (position) {
+                    case 0: //Standard
+                        backParams.removeRule(RelativeLayout.END_OF);
+                        backParams.addRule(RelativeLayout.START_OF, R.id.homeButton);
+
+                        recentsParams.removeRule(RelativeLayout.START_OF);
+                        recentsParams.addRule(RelativeLayout.END_OF, R.id.homeButton);
+                        break;
+                    case 1: //Flipped
+                        recentsParams.removeRule(RelativeLayout.END_OF);
+                        recentsParams.addRule(RelativeLayout.START_OF, R.id.homeButton);
+
+                        backParams.removeRule(RelativeLayout.START_OF);
+                        backParams.addRule(RelativeLayout.END_OF, R.id.homeButton);
+                        break;
+                    default:
+                        break;
+                }
+                backButton.setLayoutParams(backParams);
+                recentsButton.setLayoutParams(recentsParams);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         serviceToggle.setChecked(Utils.isEnabled(activity));
         spacingBar.setProgress(Utils.getSpacing(activity));
         styleSpinner.setSelection(Utils.getStyle(activity));
+        orderSpinner.setSelection(Utils.getOrder(activity));
         //showGuideCheck.setChecked(Utils.showGuides(this));
     }
 
