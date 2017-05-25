@@ -2,11 +2,11 @@
 
 Description
 -----------
-Pixbar modifies your device's navigation bar to have solid buttons. This is meant to resemble a certain device that has an exclusive on these kinds of buttons. Currently, Pixbar is meant for phones with stock Lollipop and above. This works without any root permissions needed, as well!
+Pixbar modifies your device's navigation bar to have solid buttons. This is meant to resemble a certain device that has an exclusive on these kinds of buttons. Currently, Pixbar is meant for phones with stock Lollipop and above or LG devices also. This works without any root permissions needed, as well!
 
 Please note that this app does **NOT** add a navigation bar if your phone uses physical buttons. It is simply an add-on to those that already have navigation bars.
 
-Support for Xperia, LG and other devices with slightly different navigation buttons will be available in a future release.
+Support for Xperia and other devices with slightly different navigation buttons will be available in a future release.
 
 Styles
 ------------
@@ -18,7 +18,7 @@ Screenshot
 ------------
 Here is what the app currently looks like.
 
-<img src="http://i.imgur.com/4Vf8fPG.png" width="400"/>
+<img src="http://i.imgur.com/RlF21FC.png" width="400"/>
 
 Libraries Used
 ------------
